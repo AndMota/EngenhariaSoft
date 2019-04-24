@@ -15,6 +15,9 @@
       <li class="nav-item">
         <a class="nav-link" href="cadastroUsuario.php">Cadastro de Usuário</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="listarUsuario.php">Lista de Usuários</a>
+      </li>
     </ul>
   </div>
   <!--Links do Menu-->
