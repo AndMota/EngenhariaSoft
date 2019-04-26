@@ -39,25 +39,25 @@
         <div class="form-row">
             <div class="form-group col-md-6">
             <label for="inputEmail4">Email</label>
-            <input type="name" name="email" class="form-control" id="inputEmail4" placeholder="Email">
+            <input type="name" name="email" class="form-control" id="inputEmail4" placeholder="Email" required>
             </div>
             <div class="form-group col-md-6">
             <label for="inputPassword4">Senha</label>
-            <input type="password" name="senha" class="form-control" id="inputPassword4" placeholder="Senha">
+            <input type="password" name="senha" class="form-control" id="inputPassword4" placeholder="Senha" required>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-8">
             <label for="inputEmail4">Nome</label>
-            <input type="name" name="nome" class="form-control" id="inputNome4" placeholder="Nome">
+            <input type="name" name="nome" class="form-control" id="inputNome4" placeholder="Nome" required>
             </div>
             <div class="form-group col-md-2">
             <label for="inputPassword4">Telefone</label>
-            <input type="text" name="telefone" class="form-control" id="inputTelefone4" placeholder="(11)1111-1111" onkeypress="mascara(this, '## ####-####')"  maxlength="12">
+            <input type="text" name="telefone" class="form-control" id="inputTelefone4" placeholder="(11)1111-1111" onkeypress="mascara(this, '## ####-####')"  maxlength="12" required>
             </div>
             <div class="form-group col-md-2">
             <label for="inputPassword4">CPF</label>
-            <input type="text" name="cpf" class="form-control" id="inputCPF4" placeholder="111.111.111-11" onkeypress="mascara(this, '###.###.###-##')"  maxlength="14">
+            <input type="text" name="cpf" class="form-control" id="inputCPF4" placeholder="111.111.111-11" onkeypress="mascara(this, '###.###.###-##')"  maxlength="14" required>
             </div>
         </div>
     </fieldset>
@@ -65,22 +65,22 @@
         <legend>Informações Residenciais:</legend>
         <div class="form-group">
             <label for="inputAddress">Endereço</label>
-            <input type="text" name="endereco" class="form-control" id="inputAddress" placeholder="Av. Rio Branco">
+            <input type="text" name="endereco" class="form-control" id="inputAddress" placeholder="Av. Rio Branco" required>
         </div>
         <div class="form-group">
             <label for="inputAddress2">Complemento</label>
-            <input type="text" name="complemento" class="form-control" id="inputAddress2" placeholder="Apartmento, estudio, or andar">
+            <input type="text" name="complemento" class="form-control" id="inputAddress2" placeholder="Apartamento, estudio, ou andar">
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
             <label for="inputCity">Cidade</label>
-            <input type="text" name="cidade" class="form-control" id="inputCity" placeholder="Cidade">
+            <input type="text" name="cidade" class="form-control" id="inputCity" placeholder="Cidade" required>
             </div>
             <div class="form-group col-md-4">
             <label for="inputState">Estado</label>
-            <select id="inputState" name="estado" class="form-control">
-                <option selected>Escolha...</option>
-                <option>AC</option>
+            <select id="inputState" name="estado" class="form-control" required>
+		<option></option>                
+		<option>AC</option>
                 <option>AL</option>
                 <option>AP</option>
                 <option>AM</option>
@@ -111,7 +111,7 @@
             </div>
             <div class="form-group col-md-2">
             <label for="inputZip">CEP</label>
-            <input type="text" name="cep" class="form-control" id="cep" onkeypress="mascara(this, '##.###-###')" placeholder="11.111-111" maxlength="10">
+            <input type="text" name="cep" class="form-control" id="cep" onkeypress="mascara(this, '##.###-###')" placeholder="11.111-111" maxlength="10" required>
             </div>
         </div>
     </fieldset>

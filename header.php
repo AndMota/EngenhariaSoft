@@ -18,6 +18,9 @@
       <li class="nav-item">
         <a class="nav-link" href="listarUsuario.php">Lista de Usuários</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="excluirUsuario.php">Excluir Usuários</a>
+      </li>
     </ul>
   </div>
   <!--Links do Menu-->
