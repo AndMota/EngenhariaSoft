@@ -18,33 +18,51 @@
 
 <body>
 
-	<table class ="table">
+	<table class ="table table-striped table-bordered">
 	<thead>
     <tr>
     <th scope="col">#</th>
-    <th scope="col">Nome</th>
-    <th scope="col">E-mail</th>
     <th scope="col">Tipo</th>
+    <th scope="col">Nome</th>
+    <th scope="col">CPF</th>
+    <th scope="col">E-mail</th>
+    <th scope="col">Telefone</th>
+    <th scope="col">Endereço</th>
+    <th scope="col">Complemento</th>
+    <th scope="col">Cidade</th>
+    <th scope="col">Estado</th>
+    <th scope="col">CEP</th>
     </tr>
 	</thead>
     <tbody>
   <?php
   include_once('conexao.php');
-  $sql = "SELECT `email`, `nome`, `tipo` FROM `usuarios` ORDER BY `usuarios`.`nome` ASC";
-  $resultado = mysqli_query($conexao, $sql);
+  $sql =  "SELECT nome, cpf, email, telefone, endereco, complemento, cidade, estado, cep, tipo ";
+  $sql .= "FROM usuarios ";
+  $sql .= "ORDER BY usuarios.nome ASC";
+  $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
   $i=1;
   $t="administrador";
 	while($row = mysqli_fetch_array($resultado)) {
 		echo '<tr>';
-		echo '<th scope="row">'.$i.'</th>';
-		echo ' <td> '.$row["nome"].'</td>';
-		echo ' <td> '.$row["email"].'</td>';
-		if(!$row["tipo"])
+        echo '<th scope="row">'.$i.'</th>';
+        if(!$row["tipo"]) {
 			$t="Cliente" ;
-		else 
-			$t="Administrador";
+        } else { 
+            $t="Administrador";
+        }
 		echo ' <td> '.$t.'</td>';
-		echo '</tr>';
+		echo ' <td> '.$row["nome"].'</td>';
+        echo ' <td> '.$row["cpf"].'</td>';
+        echo ' <td> '.$row["email"].'</td>';
+        echo ' <td> '.$row["telefone"].'</td>';
+        echo ' <td> '.$row["endereco"].'</td>';
+        echo ' <td> '.$row["complemento"].'</td>';
+        echo ' <td> '.$row["cidade"].'</td>';
+        echo ' <td> '.$row["estado"].'</td>';
+        echo ' <td> '.$row["cep"].'</td>';
+        echo '</tr>';
+
 		$i=$i+1;
 	}
 	mysqli_close($conexao);
