@@ -84,11 +84,7 @@
         <div class="col-md-7 col-lg-8">
 
           <!--Direitos Autorais-->
-          <p class="text-center text-md-left">© 2018 Copyright:
-            <a href="https://mdbootstrap.com/education/bootstrap/">
-              <strong> MDBootstrap.com</strong>
-            </a>
-          </p>
+          <p class="text-center text-md-left">© 2019 Copyright: Lojão do Zé</p>
 
         </div>
         <!-- Coluna no Grid -->

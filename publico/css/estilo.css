@@ -1,12 +1,7 @@
-.bg-light 
-{
-    background-color: #B22D30 !important;
-    display: block;
-}
-
 footer
 {
     background-color: #B22D30;
+    color: #ffffff;
 }
 
 h1, .h1 
@@ -29,7 +24,11 @@ body
     text-align: justify;
     background-color: rgb(227, 229, 231);
 }
-
+a {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: transparent;
+}
 span
 {
     display:none;
@@ -59,4 +58,15 @@ fieldset
     padding-left: 0.75em;
     padding-right: 0.75em;
     border: 2px groove;
+}
+
+.logomarca {
+    display: block;
+    height: 40px;
+}
+.tr-click {
+    cursor: pointer;
+}
+.td-userlist {
+    width : 16em;
 }
