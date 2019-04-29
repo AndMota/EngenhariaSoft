@@ -26,6 +26,9 @@ function checarAtivo($pagina){
       <li class="nav-item <?php echo checarAtivo('listarUsuario'); echo checarAtivo('detalheUsuario'); ?>">
         <a class="nav-link" href="listarUsuario.php">Lista de Usuários</a>
       </li>
+      <li class="nav-item <?php echo checarAtivo('editarUsuario'); ?>">
+        <a class="nav-link" href="editarUsuario.php">Editar Usuários</a>
+      </li>
       <li class="nav-item <?php echo checarAtivo('excluirUsuario'); ?>">
         <a class="nav-link" href="excluirUsuario.php">Excluir Usuários</a>
       </li>
