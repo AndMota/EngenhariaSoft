@@ -126,7 +126,7 @@
             <div class="form-group col-md-4">
             <label for="inputType">Tipo</label>
             <select id="inputType" name="tipo" class="form-control" required>';
-            if($row["tipo"] == 0) {
+            if(!$tipo) {
                 echo '<option selected>Cliente</option>';
                 echo '<option>Administrador</option>';
             } else { 
