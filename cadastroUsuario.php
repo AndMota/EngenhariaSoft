@@ -76,7 +76,7 @@
             <label for="inputCity">Cidade</label>
             <input type="text" name="cidade" class="form-control" id="inputCity" placeholder="Cidade" required>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
             <label for="inputState">Estado</label>
             <select id="inputState" name="estado" class="form-control" required>
 		<option></option>                
@@ -110,6 +110,12 @@
             </select>
             </div>
             <div class="form-group col-md-2">
+            <label for="inputType">Tipo</label>
+            <select id="inputType" name="tipo" class="form-control" required>
+		<option>Cliente</option>                
+            </select>
+            </div>
+            <div class="form-group col-md-2">
             <label for="inputZip">CEP</label>
             <input type="text" name="cep" class="form-control" id="cep" onkeypress="mascara(this, '##.###-###')" placeholder="11.111-111" maxlength="10" required>
             </div>
@@ -135,7 +141,7 @@
         $estado = $_POST['estado'];
         $cep = $_POST['cep'];
 
-        $sql = "insert into usuarios (email,senha,nome,telefone,cpf,endereco,complemento,cidade,estado,cep) values ('$email','$senha','$nome','$telefone','$cpf','$endereco','$complemento','$cidade','$estado','$cep')";
+        $sql = "insert into usuarios (email,senha,nome,telefone,cpf,endereco,complemento,cidade,estado,cep,tipo) values ('$email','$senha','$nome','$telefone','$cpf','$endereco','$complemento','$cidade','$estado','$cep', '0')";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
 
         if($salvar)

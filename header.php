@@ -17,6 +17,9 @@ function checarAtivo($pagina){
       <li class="nav-item <?php echo checarAtivo('index'); ?>">
         <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
       </li>
+      <li class="nav-item <?php echo checarAtivo('login'); ?>">
+        <a class="nav-link" href="login.php">Login</a>
+      </li>
       <li class="nav-item <?php echo checarAtivo('produto'); ?>">
         <a class="nav-link" href="produto.php">Produtos</a>
       </li>
