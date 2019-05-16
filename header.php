@@ -5,6 +5,9 @@ function checarAtivo($pagina){
     return "active";
   }
 }
+$tipo_usuario = 'administrador';
+//$tipo_usuario = 'cliente';
+
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,18 +26,47 @@ function checarAtivo($pagina){
       <li class="nav-item <?php echo checarAtivo('produto'); ?>">
         <a class="nav-link" href="produto.php">Produtos</a>
       </li>
-      <li class="nav-item <?php echo checarAtivo('cadastroUsuario'); ?>">
-        <a class="nav-link" href="cadastroUsuario.php">Cadastro de Usuário</a>
+
+      <?php if($tipo_usuario == 'administrador'):?>
+      <li class="nav-item dropdown <?php echo checarAtivo('listarUsuario'); echo checarAtivo('detalheUsuario'); echo checarAtivo('cadastroUsuario'); echo checarAtivo('editarUsuario'); ; echo checarAtivo('excluirUsuario');?>">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Usuários
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item <?php echo checarAtivo('cadastroUsuario');?>" href="cadastroUsuario.php">Cadastrar</a>
+          <a class="dropdown-item <?php echo checarAtivo('listarUsuario'); echo checarAtivo('detalheUsuario');?>" href="listarUsuario.php">Listar</a>
+          <a class="dropdown-item <?php echo checarAtivo('editarUsuario');?>" href="editarUsuario.php">Editar</a>
+          <a class="dropdown-item <?php echo checarAtivo('excluirUsuario');?>" href="excluirUsuario.php">Excluir</a>
+        </div>
       </li>
-      <li class="nav-item <?php echo checarAtivo('listarUsuario'); echo checarAtivo('detalheUsuario'); ?>">
-        <a class="nav-link" href="listarUsuario.php">Lista de Usuários</a>
+      <?php endif; ?>
+
+      <?php if($tipo_usuario == 'administrador'):?>
+      <li class="nav-item dropdown <?php echo checarAtivo('listarUsuario'); echo checarAtivo('detalheUsuario'); echo checarAtivo('cadastroUsuario'); echo checarAtivo('editarUsuario'); ; echo checarAtivo('excluirUsuario');?>">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Clientes
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item <?php echo checarAtivo('listarCliente'); echo checarAtivo('detalheCliente');?>" href="listarCliente.php">Listar</a>
+          <a class="dropdown-item <?php echo checarAtivo('editarCliente');?>" href="editarCliente.php">Editar</a>
+          <a class="dropdown-item <?php echo checarAtivo('excluirCliente');?>" href="excluirCliente.php">Excluir</a>
+        </div>
       </li>
-      <li class="nav-item <?php echo checarAtivo('editarUsuario'); ?>">
-        <a class="nav-link" href="editarUsuario.php">Editar Usuários</a>
+      <?php endif; ?>
+
+      <?php if($tipo_usuario == 'administrador'):?>
+      <li class="nav-item dropdown <?php echo checarAtivo('listarUsuario'); echo checarAtivo('detalheUsuario'); echo checarAtivo('cadastroUsuario'); echo checarAtivo('editarUsuario'); ; echo checarAtivo('excluirUsuario');?>">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Funcionários
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item <?php echo checarAtivo('listarFuncionario'); echo checarAtivo('detalheFuncionario');?>" href="listarFuncionario.php">Listar</a>
+          <a class="dropdown-item <?php echo checarAtivo('editarFuncionario');?>" href="editarFuncionario.php">Editar</a>
+          <a class="dropdown-item <?php echo checarAtivo('excluirFuncionario');?>" href="excluirFuncionario.php">Excluir</a>
+        </div>
       </li>
-      <li class="nav-item <?php echo checarAtivo('excluirUsuario'); ?>">
-        <a class="nav-link" href="excluirUsuario.php">Excluir Usuários</a>
-      </li>
+      <?php endif; ?>
+
     </ul>
   </div>
   <!--Links do Menu-->
