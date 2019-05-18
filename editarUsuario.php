@@ -44,10 +44,12 @@
                 echo '<th scope="row">'.$row["id"].'</th>';
                 echo ' <td> '.$row["nome"].'</td>';
                 echo ' <td> '.$row["email"].'</td>';
-                if(!$row["tipo"]) {
+                if($row["tipo"]==0) {
                     $t="Cliente" ;
-                } else { 
+                } else if($row["tipo"]==2){ 
                     $t="Administrador";
+                }else{
+                    $t="Funcionario";
                 }
                 echo ' <td> '.$t.'</td>';
                 echo '<td><input type="submit" name="id" value="'.$row["id"].'"</td>';
@@ -127,11 +129,17 @@
             <div class="form-group col-md-4">
             <label for="inputType">Tipo</label>
             <select id="inputType" name="tipo" class="form-control" required>';
-            if(!$tipo) {
+            if($tipo==0) {
                 echo '<option selected>Cliente</option>';
                 echo '<option>Administrador</option>';
-            } else { 
+                echo '<option>Funcionário</option>';
+            } else if($tipo==2){ 
                 echo '<option selected>Administrador</option>';
+                echo '<option>Cliente</option>';
+                echo '<option>Funcionário</option>';
+            }else{
+                echo '<option selected>Funcionário</option>';
+                echo '<option>Administrador</option>';
                 echo '<option>Cliente</option>';
             }
             echo '</select>

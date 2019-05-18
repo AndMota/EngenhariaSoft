@@ -101,7 +101,7 @@ else {
 
       <li class="nav-item <?php echo checarAtivo('login'); ?>">
         <?php if(isset($_SESSION['tipo'])): ?>
-        <a class="nav-link" href="logout.php">LogOut</a>
+        <a class="nav-link" href="logOut.php">LogOut</a>
         <?php else: ?>
         <a class="nav-link" href="login.php">Login</a>
         <?php endif; ?>
