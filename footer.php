@@ -22,16 +22,16 @@
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
           <h6 class="text-uppercase mb-4 font-weight-bold">Produtos</h6>
           <p>
-            <a href="#!">MDBootstrap</a>
+            <a href="#!">Hortifruti</a>
           </p>
           <p>
-            <a href="#!">MDWordPress</a>
+            <a href="#!">Frios</a>
           </p>
           <p>
-            <a href="#!">BrandFlow</a>
+            <a href="#!">Bebidas</a>
           </p>
           <p>
-            <a href="#!">Bootstrap Angular</a>
+            <a href="#!">Limpeza</a>
           </p>
         </div>
         <!-- Coluna no Grid -->
@@ -60,15 +60,15 @@
 
         <!-- Coluna no Grid -->
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-          <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+          <h6 class="text-uppercase mb-4 font-weight-bold">Contato</h6>
           <p>
-            <i class="fas fa-home mr-3"></i> New York, NY 10012, US</p>
+            <i class="fas fa-home mr-3"></i>Rua UFJF, 82 - Juiz de Fora</p>
           <p>
-            <i class="fas fa-envelope mr-3"></i> info@gmail.com</p>
+            <i class="fas fa-envelope mr-3"></i>seuze@lojaodoze.com.br</p>
           <p>
-            <i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+            <i class="fas fa-phone mr-3"></i>(32) 3335-4567</p>
           <p>
-            <i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+            <i class="fas fa-print mr-3"></i>(32) 9.4567-8974</p>
         </div>
         <!-- Coluna no Grid -->
 

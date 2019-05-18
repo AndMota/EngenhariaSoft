@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="publico/css/bootstrap.min.css" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" href="publico/css/estilo.css">
 </head>
 
@@ -111,9 +112,19 @@
             </div>
             <div class="form-group col-md-2">
             <label for="inputType">Tipo</label>
+
+            <?php if($tipo_usuario == 'administrador'):?>
             <select id="inputType" name="tipo" class="form-control" required>
-		<option>Cliente</option>                
+		        <option value="0" selected="selected">Cliente</option>
+                <option value="1">Vendedor</option>
+                <option value="2">Administrador</option>                
             </select>
+            <?php else: ?>
+            <select id="inputType" name="tipo" class="form-control" disabled required>
+		        <option value="0" selected="selected">Cliente</option>               
+            </select>
+            <?php endif; ?>
+
             </div>
             <div class="form-group col-md-2">
             <label for="inputZip">CEP</label>
@@ -140,6 +151,7 @@
         $cidade = $_POST['cidade'];
         $estado = $_POST['estado'];
         $cep = $_POST['cep'];
+        $cep = $_POST['tipo'];
 
         $sql = "insert into usuarios (email,senha,nome,telefone,cpf,endereco,complemento,cidade,estado,cep,tipo) values ('$email','$senha','$nome','$telefone','$cpf','$endereco','$complemento','$cidade','$estado','$cep', '0')";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
