@@ -73,9 +73,10 @@
         }
     }
 	?>
-    <?php if($row['tipo']!=1){
+    <?php 
+    /*if($row['tipo']!=1){
         echo '<br><center><b>ERRO!!! Não é um funcionario!!!</b></center><br>';
-    }else{
+    }else{*/
     ?>
 	
     <table class ="table table-striped table-bordered">
@@ -132,7 +133,7 @@
 
 
 <?php
-}
+//}
     include "footer.php";
 ?>
 

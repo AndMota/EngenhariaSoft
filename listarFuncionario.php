@@ -15,71 +15,189 @@
 </head>
 <?php
     include "header.php";
+
+    if(isset($_GET['orderar'])){
+        $ordenar = $_GET['orderar'];
+    } else {
+        $ordenar = "";
+    }
+
+    $ordemAlfabetica = false;
+    $ordemNumId = false;
+    $ordemCargo = false;
+
+    if($ordenar != ""){
+        $ordenar = explode(',', $ordenar);
+
+        $ordemAlfabetica = in_array('ordem-alfabetica', $ordenar);
+        $ordemNumId = in_array('ordem-num-id', $ordenar);
+        $ordemCargo = in_array('ordem-cargo', $ordenar);
+    }
+
+    if(!$ordemAlfabetica && !$ordemNumId && !$ordemCargo){
+        $ordemAlfabetica = true;
+    }
 ?>
+<script>
+    function handleClick(){
+        var checkOA = false; checkN = false; checkC = false;
+        var url = "listarFuncionario.php?orderar=";
 
+        //checa se as checkboxes foram marcadas
+        checkOA = $('#chkOrdemAlfabetica').is(":checked");
+        checkN = $('#chkNumId').is(":checked");
+        checkC = $('#chkCargo').is(":checked");
+        
+        //preenche querystring com parametros
+        if(checkOA){
+            url += $('#chkOrdemAlfabetica').val() + ",";
+        }
+        if(checkN){
+            url += $('#chkNumId').val() + ",";
+        }
+        if(checkC){
+            url += $('#chkCargo').val() + ",";
+        }
+
+        //console.log("checkOA: " + checkOA);
+        //console.log("checkN: " + checkN);
+        //console.log("checkC: " + checkC);
+
+        //se nenhuma for marcada, por padrão ordena por ordem alfabetica
+        if(!checkOA && !checkN && !checkC){
+            $("#chkOrdemAlfabetica").prop('checked', true);
+            checkOA = true;
+            url += $('#chkOrdemAlfabetica').val(); + ",";
+        }
+
+        //console.log(url);
+
+        location.href = url;
+    }
+    function detalheFuncionario(id){
+        location.href = "detalheFuncionario.php?id=" + id;
+    }
+</script>
 <body>
-
+    <div class="row">
+        <div class="col">
+            <div class="col-filtro">
+                <label class="form-check-label label-filtro" for="chkOrdemAlfabetica">Ordenar por: </label>
+                <div class="form-check form-check-inline">
+                    <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="chkOrdemAlfabetica" 
+                    value="ordem-alfabetica" 
+                    <?php if($ordemAlfabetica){echo 'checked="checked"';}?>
+                    onclick="handleClick();">
+                    <label class="form-check-label" for="inlineCheckbox1">Ordem Alfabética</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="chkNumId" 
+                    value="ordem-num-id" 
+                    <?php if($ordemNumId){echo 'checked="checked"';}?>
+                    onclick="handleClick();">
+                    <label class="form-check-label" for="inlineCheckbox2">Número de Identificação</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="chkCargo" 
+                    value="ordem-cargo"
+                    <?php if($ordemCargo){echo 'checked="checked"';}?>
+                    onclick="handleClick();">
+                    <label class="form-check-label" for="inlineCheckbox3">Cargo</label>
+                </div>
+            </div>
+        </div>
+    </div>
 	<table class ="table table-striped table-bordered">
 	<thead>
     <tr>
     <th scope="col">#</th>
     <th scope="col">Nome</th>
-    <th scope="col">Cargo</th>
-    <th scope="col">Data admissão</th>
-    <th scope="col">E-mail</th>
-    <th scope="col">Telefone</th>
     <th scope="col">CPF</th>
-    <th scope="col">Endereço</th>
-    <th scope="col">Complemento</th>
+    <th scope="col">Cargo</th>
+    <th scope="col">E-Mail</th>
     <th scope="col">Cidade</th>
     <th scope="col">Estado</th>
+    <th scope="col">Número de Identificação</th>
     </tr>
 	</thead>
     <tbody>
   <?php
-    function formataTelefone($numero){
-        if(strlen($numero) == 10){
-            $novo = substr_replace($numero, '(', 0, 0);
-            $novo = substr_replace($novo, '9', 3, 0);
-            $novo = substr_replace($novo, ')', 3, 0);
-        }else{
-            $novo = substr_replace($numero, '(', 0, 0);
-            $novo = substr_replace($novo, ')', 3, 0);
+
+    //aplica a mascara fornecida no campo $formato
+    function aplicaMascara($texto, $formato)
+    {
+        $len = strlen($formato);
+        $ret = "";
+        $pos = 0;
+        for($i=0; $i<$len; $i++)
+        {
+            $chr = substr($formato, $i, 1);
+            if($chr == '#')
+            {
+                if($pos <= strlen($texto)){
+                    $ret .= substr($texto, $pos, 1);
+                } else {
+                    $ret .= " ";
+                }
+                $pos++;
+            } else {
+                $ret .= $chr;
+            }
+            
         }
-        return $novo;
+        return $ret;
+    }
+    
+    include_once('conexao.php');
+    $sql =  "SELECT id, nome, cpf, email, cargo_funcionario, cidade, estado, num_identificacao_funcionario FROM usuarios WHERE tipo=1 OR tipo=2 ";
+    $order = "";
+
+    if($ordemAlfabetica){
+        $order .= "ORDER BY nome ASC";
+    }
+    if($ordemNumId){
+        if($order == ""){
+            //se não tiver ordem definida
+            $order .= "ORDER BY num_identificacao_funcionario ASC";   
+        } else {
+            //se já tiver uma ordem definida
+            $order .= ", num_identificacao_funcionario ASC";
+        }
+    }
+    if($ordemCargo){
+        if($order == ""){
+            //se não tiver ordem definida
+            $order .= "ORDER BY cargo_funcionario ASC";   
+        } else {
+            //se já tiver uma ordem definida
+            $order .= ", cargo_funcionario ASC";
+        }
     }
 
-    function formataCPF($cpf){
-        $cpf = substr_replace($cpf,'.',3,0);
-        $cpf = substr_replace($cpf,'.',7,0);
-        $cpf = substr_replace($cpf,'-',11,0);
-        return $cpf;
-    }
-    function formataData($data){
-        $ano = substr($data,0,4);
-        $mes = substr($data,5,2);
-        $dia = substr($data,8,2);
-        $data = $dia.'/'.$mes.'/'.$ano;
-        return $data;
-    }
+    $sql .= $order;
 
-
-  include_once('conexao.php');
-  $sql =  "SELECT nome, email, telefone, cpf, endereco, complemento, cidade, estado, cargo_funcionario, data_entrada_funcionario, num_identificacao_funcionario FROM usuarios WHERE usuarios.tipo=1 ORDER BY usuarios.nome ASC";
-  $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
+    //echo $sql;
+  
+    $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
 	while($row = mysqli_fetch_array($resultado)) {
-		echo '<tr>';
-        echo '<th scope="row">'.$row["num_identificacao_funcionario"].'</th>';
+		echo '<tr class="tr-click" onclick="detalheFuncionario('.$row["id"].')">';
+        echo '<th scope="row">'.$row["id"].'</th>';
         echo ' <td> '.$row["nome"].'</td>';
+        echo ' <td> '.aplicaMascara($row['cpf'],'###.###.###-##').'</td>';
         echo ' <td> '.$row["cargo_funcionario"].'</td>';
-        echo ' <td> '.formataData($row["data_entrada_funcionario"]).'</td>';
         echo ' <td> '.$row["email"].'</td>';
-        echo ' <td> '.formataTelefone($row["telefone"]).'</td>';
-        echo ' <td> '.formataCPF($row["cpf"]).'</td>';
-        echo ' <td> '.$row["endereco"].'</td>';
-        echo ' <td> '.$row["complemento"].'</td>';
         echo ' <td> '.$row["cidade"].'</td>';
         echo ' <td> '.$row["estado"].'</td>';
+        echo ' <td> '.$row["num_identificacao_funcionario"].'</td>';
         echo '</tr>';
 	}
 	mysqli_close($conexao);
