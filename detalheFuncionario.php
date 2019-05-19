@@ -15,24 +15,24 @@
 </head>
 <?php
     include "header.php";
+    function formataData($data){
+        $ano = substr($data,0,4);
+        $mes = substr($data,5,2);
+        $dia = substr($data,8,2);
+        $data = $dia.'/'.$mes.'/'.$ano;
+        return $data;
+    }
 ?>
 
 <body>
 <?php
     include_once('conexao.php');
 
-    $sql =  "SELECT id, nome, cpf, email, telefone, endereco, complemento, cidade, estado, cep, tipo ";
+    $sql =  "SELECT id, nome, cpf, email, telefone, endereco, complemento, cidade, estado, cep, tipo, cargo_funcionario, salario_funcionario, data_entrada_funcionario, num_identificacao_funcionario ";
     $sql .= "FROM usuarios ";
     $sql .= "WHERE id=" . $_GET["id"];
     $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
     $row = mysqli_fetch_array($resultado);
-    if($row["tipo"]==0) {
-        $t="Cliente" ;
-    } else if($row["tipo"]=2){ 
-        $t="Administrador";
-    }else{
-        $t="Funcionário";
-    }
 
     mysqli_close($conexao);
      
@@ -73,18 +73,33 @@
         }
     }
 	?>
-    
-	<table class ="table table-striped table-bordered">
+    <?php if($row['tipo']!=1){
+        echo '<br><center><b>ERRO!!! Não é um funcionario!!!</b></center><br>';
+    }else{
+    ?>
+	
+    <table class ="table table-striped table-bordered">
         <tbody>
             <thead>
-                <tr><th colspan="2" scope="col">Dados do(a) usuário(a) #<?php echo $row['id'];?></th></tr>
+                <tr><th colspan="2" scope="col">Dados do(a) funcionario #<?php echo $row['id'];?></th></tr>
             </thead>
-
+            <tr>
+                <td class="td-userlist">Numero identificação:</td><td><?php echo $row['num_identificacao_funcionario'];?></td>
+            </tr>
             <tr>
                 <td class="td-userlist">Nome:</td><td><?php echo $row['nome'];?></td>
             </tr>
             <tr>
                 <td class="td-userlist">CPF:</td><td><?php echo aplicaMascara($row['cpf'],'###.###.###-##');?></td>
+            </tr>
+            <tr>
+                <td class="td-userlist">Cargo:</td><td><?php echo $row['cargo_funcionario'];?></td>
+            </tr>
+            <tr>
+                <td class="td-userlist">Salário:</td><td><?php echo $row['salario_funcionario'];?></td>
+            </tr>
+            <tr>
+                <td class="td-userlist">Data contratação:</td><td><?php echo formataData($row['data_entrada_funcionario']);?></td>
             </tr>
             <tr>
                 <td class="td-userlist">E-mail:</td><td><?php echo $row['email'];?></td>
@@ -107,9 +122,6 @@
             <tr>
                 <td class="td-userlist">CEP:</td><td><?php echo aplicaMascara($row['cep'],'##.###-###');?></td>
             </tr>
-            <tr>
-                <td class="td-userlist">Tipo:</td><td><?php echo $t;?></td>
-            </tr>    
         <tbody>
 	</table>
     <hr>
@@ -120,6 +132,7 @@
 
 
 <?php
+}
     include "footer.php";
 ?>
 

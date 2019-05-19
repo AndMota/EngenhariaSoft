@@ -26,13 +26,6 @@
     $sql .= "WHERE id=" . $_GET["id"];
     $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
     $row = mysqli_fetch_array($resultado);
-    if($row["tipo"]==0) {
-        $t="Cliente" ;
-    } else if($row["tipo"]=2){ 
-        $t="Administrador";
-    }else{
-        $t="Funcionário";
-    }
 
     mysqli_close($conexao);
      
@@ -73,11 +66,15 @@
         }
     }
 	?>
-    
-	<table class ="table table-striped table-bordered">
+    <?php if($row['tipo']!=0){
+        echo '<br><center><b>ERRO!!! Não é um cliente!!!</b></center><br>';
+    }else{
+    ?>
+	
+    <table class ="table table-striped table-bordered">
         <tbody>
             <thead>
-                <tr><th colspan="2" scope="col">Dados do(a) usuário(a) #<?php echo $row['id'];?></th></tr>
+                <tr><th colspan="2" scope="col">Dados do(a) cliente #<?php echo $row['id'];?></th></tr>
             </thead>
 
             <tr>
@@ -107,9 +104,6 @@
             <tr>
                 <td class="td-userlist">CEP:</td><td><?php echo aplicaMascara($row['cep'],'##.###-###');?></td>
             </tr>
-            <tr>
-                <td class="td-userlist">Tipo:</td><td><?php echo $t;?></td>
-            </tr>    
         <tbody>
 	</table>
     <hr>
@@ -120,6 +114,7 @@
 
 
 <?php
+}
     include "footer.php";
 ?>
 
