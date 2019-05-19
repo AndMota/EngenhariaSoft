@@ -132,6 +132,16 @@
             </div>
         </div>
     </fieldset>
+    <fieldset>
+        <legend>Informações Cliente:</legend>
+        <div class="form-group">
+        <div class="form-group col-md-4">
+
+            <label for="inputAddress">CNPJ</label>
+            <input type="text" name="cnpj" class="form-control" id="inputCNPJ4" placeholder="11.111.111/1111-11" onkeypress="mascara(this, '##.###.###/####-##')"  maxlength="18" required>
+        </div>
+        </div>
+    </fieldset>
     <button type="submit" class="btn btn-primary" value="Submit" name="submit">Confirmar</button>
     </form>
     <!-- Fim do Formulário de Cadastro de Usuário  -->
@@ -146,6 +156,7 @@
         $nome = $_POST['nome'];
         $telefone = $_POST['telefone'];
         $cpf = $_POST['cpf'];
+        $cnpj = $_POST['cnpj'];
         $endereco = $_POST['endereco'];
         $complemento = $_POST['complemento'];
         $cidade = $_POST['cidade'];
@@ -153,7 +164,7 @@
         $cep = $_POST['cep'];
         $cep = $_POST['tipo'];
 
-        $sql = "insert into usuarios (email,senha,nome,telefone,cpf,endereco,complemento,cidade,estado,cep,tipo) values ('$email','$senha','$nome','$telefone','$cpf','$endereco','$complemento','$cidade','$estado','$cep', '0')";
+        $sql = "insert into usuarios (email,senha,nome,telefone,cpf,cnpj,endereco,complemento,cidade,estado,cep,tipo) values ('$email','$senha','$nome','$telefone','$cpf','$cnpj''$endereco','$complemento','$cidade','$estado','$cep', '0')";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
 
         if($salvar)
