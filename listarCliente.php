@@ -15,57 +15,181 @@
 </head>
 <?php
     include "header.php";
+
+    if(isset($_GET['orderar'])){
+        $ordenar = $_GET['orderar'];
+    } else {
+        $ordenar = "";
+    }
+
+    $ordemAlfabetica = false;
+    $ordemEstado = false;
+    $ordemCidade = false;
+
+    if($ordenar != ""){
+        $ordenar = explode(',', $ordenar);
+
+        $ordemAlfabetica = in_array('ordem-alfabetica', $ordenar);
+        $ordemEstado = in_array('ordem-estado', $ordenar);
+        $ordemCidade = in_array('ordem-cidade', $ordenar);
+    }
+
+    if(!$ordemAlfabetica && !$ordemEstado && !$ordemCidade){
+        $ordemAlfabetica = true;
+    }
 ?>
+<script>
+    function handleClick(){
+        var checkOA = false; checkE = false; checkC = false;
+        var url = "listarCliente.php?orderar=";
 
+        //checa se as checkboxes foram marcadas
+        checkOA = $('#chkOrdemAlfabetica').is(":checked");
+        checkE = $('#chkEstado').is(":checked");
+        checkC = $('#chkCidade').is(":checked");
+        
+        //preenche querystring com parametros
+        if(checkOA){
+            url += $('#chkOrdemAlfabetica').val() + ",";
+        }
+        if(checkE){
+            url += $('#chkEstado').val() + ",";
+        }
+        if(checkC){
+            url += $('#chkCidade').val() + ",";
+        }
+
+        //console.log("checkOA: " + checkOA);
+        //console.log("checkE: " + checkE);
+        //console.log("checkC: " + checkC);
+
+        //se nenhuma for marcada, por padrão ordena por ordem alfabetica
+        if(!checkOA && !checkE && !checkC){
+            $("#chkOrdemAlfabetica").prop('checked', true);
+            checkOA = true;
+            url += $('#chkOrdemAlfabetica').val(); + ",";
+        }
+
+        //console.log(url);
+
+        location.href = url;
+    }
+    function detalheCliente(id){
+        location.href = "detalheCliente.php?id=" + id;
+    }
+</script>
 <body>
-
+    <div class="row">
+        <div class="col">
+            <div class="col-filtro">
+                <label class="form-check-label label-filtro" for="chkOrdemAlfabetica">Ordenar por: </label>
+                <div class="form-check form-check-inline">
+                    <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="chkOrdemAlfabetica" 
+                    value="ordem-alfabetica" 
+                    <?php if($ordemAlfabetica){echo 'checked="checked"';}?>
+                    onclick="handleClick();">
+                    <label class="form-check-label" for="inlineCheckbox1">Ordem Alfabética</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="chkEstado" 
+                    value="ordem-estado" 
+                    <?php if($ordemEstado){echo 'checked="checked"';}?>
+                    onclick="handleClick();">
+                    <label class="form-check-label" for="inlineCheckbox2">Estado</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input 
+                    class="form-check-input" 
+                    type="checkbox" 
+                    id="chkCidade" 
+                    value="ordem-cidade"
+                    <?php if($ordemCidade){echo 'checked="checked"';}?>
+                    onclick="handleClick();">
+                    <label class="form-check-label" for="inlineCheckbox3">Cidade</label>
+                </div>
+            </div>
+        </div>
+    </div>
 	<table class ="table table-striped table-bordered">
 	<thead>
     <tr>
     <th scope="col">#</th>
     <th scope="col">Nome</th>
-    <th scope="col">E-mail</th>
-    <th scope="col">Telefone</th>
     <th scope="col">CPF</th>
-    <th scope="col">Endereço</th>
-    <th scope="col">Complemento</th>
     <th scope="col">Cidade</th>
     <th scope="col">Estado</th>
     </tr>
 	</thead>
     <tbody>
   <?php
-    function formataTelefone($numero){
-        if(strlen($numero) == 10){
-            $novo = substr_replace($numero, '(', 0, 0);
-            $novo = substr_replace($novo, '9', 3, 0);
-            $novo = substr_replace($novo, ')', 3, 0);
-        }else{
-            $novo = substr_replace($numero, '(', 0, 0);
-            $novo = substr_replace($novo, ')', 3, 0);
+
+    //aplica a mascara fornecida no campo $formato
+    function aplicaMascara($texto, $formato)
+    {
+        $len = strlen($formato);
+        $ret = "";
+        $pos = 0;
+        for($i=0; $i<$len; $i++)
+        {
+            $chr = substr($formato, $i, 1);
+            if($chr == '#')
+            {
+                if($pos <= strlen($texto)){
+                    $ret .= substr($texto, $pos, 1);
+                } else {
+                    $ret .= " ";
+                }
+                $pos++;
+            } else {
+                $ret .= $chr;
+            }
+            
         }
-        return $novo;
+        return $ret;
+    }
+    
+    include_once('conexao.php');
+    $sql =  "SELECT id, nome, cpf, cidade, estado FROM usuarios WHERE usuarios.tipo=0 ";
+    $order = "";
+
+    if($ordemAlfabetica){
+        $order .= "ORDER BY usuarios.nome ASC";
+    }
+    if($ordemEstado){
+        if($order == ""){
+            //se não tiver ordem definida
+            $order .= "ORDER BY usuarios.estado ASC";   
+        } else {
+            //se já tiver uma ordem definida
+            $order .= ", usuarios.estado ASC";
+        }
+    }
+    if($ordemCidade){
+        if($order == ""){
+            //se não tiver ordem definida
+            $order .= "ORDER BY usuarios.cidade ASC";   
+        } else {
+            //se já tiver uma ordem definida
+            $order .= ", usuarios.cidade ASC";
+        }
     }
 
-    function formataCPF($cpf){
-        $cpf = substr_replace($cpf,'.',3,0);
-        $cpf = substr_replace($cpf,'.',7,0);
-        $cpf = substr_replace($cpf,'-',11,0);
-        return $cpf;
-    }
+    $sql .= $order;
 
-  include_once('conexao.php');
-  $sql =  "SELECT id, nome, email, telefone, cpf, endereco, complemento, cidade, estado FROM usuarios WHERE usuarios.tipo=0 ORDER BY usuarios.nome ASC";
-  $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
+    //echo $sql;
+  
+    $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
 	while($row = mysqli_fetch_array($resultado)) {
-		echo '<tr>';
+		echo '<tr class="tr-click" onclick="detalheCliente('.$row["id"].')">';
         echo '<th scope="row">'.$row["id"].'</th>';
         echo ' <td> '.$row["nome"].'</td>';
-        echo ' <td> '.$row["email"].'</td>';
-        echo ' <td> '.formataTelefone($row["telefone"]).'</td>';
-        echo ' <td> '.formataCPF($row["cpf"]).'</td>';
-        echo ' <td> '.$row["endereco"].'</td>';
-        echo ' <td> '.$row["complemento"].'</td>';
+        echo ' <td> '.aplicaMascara($row['cpf'],'###.###.###-##').'</td>';
         echo ' <td> '.$row["cidade"].'</td>';
         echo ' <td> '.$row["estado"].'</td>';
         echo '</tr>';

@@ -70,3 +70,10 @@ fieldset
 .td-userlist {
     width : 16em;
 }
+.col-filtro {
+    padding: 0.6em 1em;
+    background-color: #cfcfcf;
+}
+.label-filtro {
+    padding-right: 1em;
+}
