@@ -114,7 +114,7 @@
             <label for="inputType">Tipo</label>
 
             <?php if($tipo_usuario == 'administrador'):?>
-            <select id="inputType" name="tipo" class="form-control" required>
+            <select id="inputType" name="tipo" class="form-control" onchange="changeType()" required>
 		        <option value="0" selected="selected">Cliente</option>
                 <option value="1">Vendedor</option>
                 <option value="2">Administrador</option>                
@@ -132,7 +132,7 @@
             </div>
         </div>
     </fieldset>
-    <fieldset>
+    <fieldset id="fieldsetCliente">
         <legend>Informações Cliente:</legend>
         <div class="form-group">
         <div class="form-group col-md-4">
@@ -142,6 +142,56 @@
         </div>
         </div>
     </fieldset>
+    <!-- Informações Extras do cadastro de Funcionários -->
+    <fieldset id="fieldsetFuncionario" hidden>
+        <legend>Informações Funcionário:</legend>
+        <div class="form-row">
+        <div class="form-group col-md-4">
+
+            <label for="inputIdentifier">Número de Indentificação</label>
+            <input type="number" name="n_identificacao" class="form-control" id="inputIdentifier" placeholder="111" onkeypress="mascara(this, '###')"  min="100" max="999" maxlength="3">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputSalario">Salário (R$)</label>
+            <input type="text" name="salario" class="form-control" id="inputSalario" placeholder="111111,11" onkeypress="mascara(this, '######,##')"  maxlength="9">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputCargo">Cargo</label>
+            <input type="text" name="cargo" class="form-control" id="inputCargo" placeholder="Vendedor" maxlength="18">
+        </div>
+        </div>
+    </fieldset>
+    <!-- Mostrar Campo Funcionario e Esconder Cliente -->
+    <script>
+        function changeType(){
+            var tipo = document.getElementById("inputType");
+            if(tipo.value == 0){    //Cliente
+                document.getElementById("fieldsetCliente").hidden = false;
+                document.getElementById("fieldsetFuncionario").hidden = true;
+
+                document.getElementById("inputCNPJ4").required = true;
+                document.getElementById("inputIdentifier").required = false;
+                document.getElementById("inputSalario").required = false;
+                document.getElementById("inputCargo").required = false;
+            }else if(tipo.value == 1){  //Funcionário
+                document.getElementById("fieldsetCliente").hidden = true;
+                document.getElementById("fieldsetFuncionario").hidden = false;
+
+                document.getElementById("inputCNPJ4").required = false;
+                document.getElementById("inputIdentifier").required = true;
+                document.getElementById("inputSalario").required = true;
+                document.getElementById("inputCargo").required = true;
+            }else if(tipo.value == 2){  //Administrador
+                document.getElementById("fieldsetCliente").hidden = true;
+                document.getElementById("fieldsetFuncionario").hidden = true;
+
+                document.getElementById("inputCNPJ4").required = false;
+                document.getElementById("inputIdentifier").required = false;
+                document.getElementById("inputSalario").required = false;
+                document.getElementById("inputCargo").required = false;
+            }
+        }
+    </script>
     <button type="submit" class="btn btn-primary" value="Submit" name="submit">Confirmar</button>
     </form>
     <!-- Fim do Formulário de Cadastro de Usuário  -->
@@ -162,9 +212,13 @@
         $cidade = $_POST['cidade'];
         $estado = $_POST['estado'];
         $cep = $_POST['cep'];
-        $cep = $_POST['tipo'];
+        $tipo = $_POST['tipo'];
+        $identificacao = $_POST['n_identificacao'];
+        $salario = $_POST['salario'];
+        $cargo = $_POST['cargo'];
+        $data = date("Y-m-d");
 
-        $sql = "insert into usuarios (email,senha,nome,telefone,cpf,cnpj,endereco,complemento,cidade,estado,cep,tipo) values ('$email','$senha','$nome','$telefone','$cpf','$cnpj''$endereco','$complemento','$cidade','$estado','$cep', '0')";
+        $sql = "insert into usuarios (email,senha,nome,telefone,cpf,cnpj,endereco,complemento,cidade,estado,cep,tipo,cargo_funcionario,salario_funcionario,num_identificacao_funcionario,data_entrada_funcionario) values ('$email','$senha','$nome','$telefone','$cpf','$cnpj','$endereco','$complemento','$cidade','$estado','$cep', '$tipo', '$cargo', '$salario', '$identificacao', '$data')";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
 
         if($salvar)
