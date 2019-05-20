@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 20-Maio-2019 às 06:26
+-- Generation Time: 20-Maio-2019 às 07:37
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.4
 
@@ -156,8 +156,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `salario_funcionario` float DEFAULT NULL,
   `data_entrada_funcionario` date DEFAULT NULL,
   `num_identificacao_funcionario` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `cpf` (`cpf`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
@@ -172,11 +171,11 @@ INSERT INTO `usuarios` (`id`, `email`, `senha`, `nome`, `telefone`, `cpf`, `cnpj
 (5, 'hermergardo@yahoo.com', '1234', 'Hermengardo', '2125469875', '22222222222', NULL, 'Rua Local', 'Apto 101', 'Campinas', 'SP', '321267894', 1, 'Vendedor', 1400, '2019-05-01', 112),
 (6, 'severinodjs@hotmail.com', '1234', 'Severino De Jesus', '91945621875', '11122244455', NULL, 'Rua Maria das Dores', NULL, 'Recife', 'PE', '15545448', 2, 'Administrador', 2500, '2018-11-02', 90),
 (7, 'benedito222@gmail.com', '1234', 'Benedito CamurÃ§a', '9975467514', '11112225557', '92390813000153', 'Rua Jose Silva', '', 'Caruaru', 'PE', '12316465', 0, NULL, NULL, NULL, NULL),
-(8, 'fridinho777@hotmail.com', '1234', 'Fridundino Eulâmpio', '79754665555', '12345678905', '84939151000108', 'Rua Genoveva', NULL, 'Passa e Fica', 'RN', '99989887', 0, NULL, NULL, NULL, NULL),
+(8, 'fridinho777@hotmail.com', '1234', 'Fridundino EulÃ­mpio', '79 7.5466-5555', '12345678905', '84939151000108', 'Rua Genoveva', '', 'Passa e Fica', 'RN', '99.989-887', 0, NULL, NULL, NULL, NULL),
 (9, 'antonio1234@yahoo.com', '1234', 'AntÃ´nio BalduÃ­no', '9879645125', '89764532155', '37225967000181', 'Rua Local', '', 'Quatis', 'RJ', '27888944', 0, NULL, NULL, NULL, NULL),
 (10, 'capitunaotraiu@gmail.com', '1234', 'Capitu Silva', '1112554888', '98766549879', NULL, 'Rua Dom Casmurro', NULL, 'Rio de Janeiro', 'RJ', '27400000', 2, 'Administrador', 1235, '2019-05-01', 223),
 (11, 'camilinha87@gmail.com', '1234', 'Camila Cesar', '77897987987', '77777777777', NULL, 'Rua Josefina', NULL, 'Juiz de Fora', 'MG', '36010777', 1, 'Vendedor', 1234, '2019-05-01', 222),
-(12, 'seuze@gmail.com', '1234', 'José Silva', '46545646548', '33333333333', NULL, 'Rua UFJF', NULL, 'Juiz de Fora', 'MG', '36020444', 2, 'Administrador', 3500, '2017-03-12', 1);
+(12, 'seuze@gmail.com', '1234', 'JosÃ© Silva', '46  . .5.-45-6', '33333333333', NULL, 'Rua  UFJF', '', 'Juiz de Fora', 'MG', '36...0-2-0', 2, 'Administrador', 3500, '2017-03-12', 1);
 
 -- --------------------------------------------------------
 
