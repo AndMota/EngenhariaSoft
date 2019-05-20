@@ -138,7 +138,7 @@
         <div class="form-group col-md-4">
 
             <label for="inputAddress">CNPJ</label>
-            <input type="text" name="cnpj" class="form-control" id="inputCNPJ4" placeholder="11.111.111/1111-11" onkeypress="mascara(this, '##.###.###/####-##')"  maxlength="18" required>
+            <input type="text" name="cnpj" class="form-control" id="inputCNPJ4" placeholder="11.111.111/1111-11" onkeypress="mascara(this, '##.###.###/####-##')"  maxlength="18">
         </div>
         </div>
     </fieldset>
@@ -153,7 +153,7 @@
         </div>
         <div class="form-group col-md-4">
             <label for="inputSalario">Salário (R$)</label>
-            <input type="text" name="salario" class="form-control" id="inputSalario" placeholder="111111,11" onkeypress="mascara(this, '######,##')"  maxlength="9">
+            <input type="text" name="salario" class="form-control" id="inputSalario" placeholder="111111,11"  maxlength="9">
         </div>
         <div class="form-group col-md-4">
             <label for="inputCargo">Cargo</label>
@@ -169,7 +169,7 @@
                 document.getElementById("fieldsetCliente").hidden = false;
                 document.getElementById("fieldsetFuncionario").hidden = true;
 
-                document.getElementById("inputCNPJ4").required = true;
+                document.getElementById("inputCNPJ4").required = false;
                 document.getElementById("inputIdentifier").required = false;
                 document.getElementById("inputSalario").required = false;
                 document.getElementById("inputCargo").required = false;

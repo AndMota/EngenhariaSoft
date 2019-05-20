@@ -217,7 +217,7 @@
             <label for="inputEmail4">Nome</label>
             <input type="name" name="nome" class="form-control" id="inputNome4" placeholder="Nome" value="'.$nome.'" required>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-4">
             <label for="inputPassword4">Telefone</label>
             <input type="text" name="telefone" class="form-control" id="inputTelefone4" placeholder="(11)1111-1111" onkeypress="mascara(this, \'## ####-####\')"  maxlength="12" value="'.aplicaMascaraTelefone($telefone).'" required>
             </div>
@@ -286,7 +286,7 @@
     <div class="form-group">
     <div class="form-group col-md-4">
         <label for="inputAddress">CNPJ</label>
-        <input type="text" name="cnpj" class="form-control" id="inputCNPJ4" placeholder="11.111.111/1111-11" onkeypress="mascara(this, \'##.###.###/####-##\')"  maxlength="18" value="'.aplicaMascara($cnpj,"##.###.###/####-##").'" required>
+        <input type="text" name="cnpj" class="form-control" id="inputCNPJ4" placeholder="11.111.111/1111-11" onkeypress="mascara(this, \'##.###.###/####-##\')"  maxlength="18" value="'.aplicaMascara($cnpj,"##.###.###/####-##").'">
     </div>
     </div>
 </fieldset>
