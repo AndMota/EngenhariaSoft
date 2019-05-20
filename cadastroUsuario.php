@@ -116,12 +116,12 @@
             <?php if($tipo_usuario == 'administrador'):?>
             <select id="inputType" name="tipo" class="form-control" onchange="changeType()" required>
 		        <option value="0" selected="selected">Cliente</option>
-                <option value="1">Vendedor</option>
+                <option value="1">Funcionário</option>
                 <option value="2">Administrador</option>                
             </select>
             <?php else: ?>
-            <select id="inputType" name="tipo" class="form-control" disabled required>
-		        <option value="0" selected="selected">Cliente</option>               
+            <select id="inputType" name="tipo" class="form-control" required>
+		        <option value="0" selected="selected">Cliente</option>
             </select>
             <?php endif; ?>
 

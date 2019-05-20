@@ -53,7 +53,7 @@
             $tipo = 1;
         }
 
-        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep',`cnpj`='$cnpj'`tipo`='$tipo' WHERE `cpf`='$cpf'";
+        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep',`cnpj`='$cnpj', `tipo`='$tipo' WHERE `cpf`='$cpf'";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
     }
         $sql =  "SELECT id, nome, email, telefone, cpf, endereco, complemento, cidade, estado FROM usuarios WHERE usuarios.tipo=0 ORDER BY usuarios.nome ASC";

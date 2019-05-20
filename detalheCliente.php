@@ -21,7 +21,7 @@
 <?php
     include_once('conexao.php');
 
-    $sql =  "SELECT id, nome, cpf, email, telefone, endereco, complemento, cidade, estado, cep, tipo ";
+    $sql =  "SELECT id, nome, cpf, email, telefone, endereco, complemento, cidade, estado, cep, tipo, cnpj ";
     $sql .= "FROM usuarios ";
     $sql .= "WHERE id=" . $_GET["id"];
     $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
@@ -103,6 +103,9 @@
             </tr>
             <tr>
                 <td class="td-userlist">CEP:</td><td><?php echo aplicaMascara($row['cep'],'##.###-###');?></td>
+            </tr>
+            <tr>
+                <td class="td-userlist">CNPJ:</td><td><?php echo aplicaMascara($row['cnpj'],'##.###.###/####-##');?></td>
             </tr>
         <tbody>
 	</table>
