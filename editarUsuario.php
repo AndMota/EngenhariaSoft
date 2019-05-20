@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Editar Usuário</title>
+    <title>Editar Usuários</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="publico/css/bootstrap.min.css" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -14,28 +14,6 @@
 
 <?php
     include "header.php";
-    /* Ligação com Banco de Dados */
-    include_once("conexao.php");/* Estabelece a conexão */
-    if(isset($_POST["submit"]))
-    {
-
-        $email = $_POST['email'];
-        $nome = $_POST['nome'];
-        $telefone = $_POST['telefone'];
-        $cpf = $_POST['cpf'];
-        $endereco = $_POST['endereco'];
-        $complemento = $_POST['complemento'];
-        $cidade = $_POST['cidade'];
-        $estado = $_POST['estado'];
-        $cep = $_POST['cep'];
-        $tipo = 0;
-        if(!strcmp($_POST['tipo'], "Administrador")) {
-            $tipo = 1;
-        }
-
-        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep',`tipo`='$tipo' WHERE `cpf`='$cpf'";
-        $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
-    }
 ?>
 
 <hr>
@@ -55,9 +33,34 @@
     <tbody>
     <form action="editarUsuario.php" method="post">
     <?php
-        $sql =  "SELECT id, nome, email, tipo ";
-        $sql .= "FROM usuarios ";
-        $sql .= "ORDER BY usuarios.nome ASC";
+    /* Ligação com Banco de Dados */
+    include_once("conexao.php");/* Estabelece a conexão */
+    if(isset($_POST["submit"]))
+    {
+
+        $id = $_POST['submit_id'];
+        $email = $_POST['email'];
+        $nome = $_POST['nome'];
+        $telefone = $_POST['telefone'];
+        $cpf = $_POST['cpf'];
+        $endereco = $_POST['endereco'];
+        $complemento = $_POST['complemento'];
+        $cidade = $_POST['cidade'];
+        $estado = $_POST['estado'];
+        $cep = $_POST['cep'];
+        $tipo = 0;
+        if(!strcmp($_POST['tipo'], "Funcionário")) {
+            $tipo = 1;
+        }
+
+        $salario = $_POST['salario'];
+        $identificacao = $_POST['n_identificacao'];
+        $cargo = $_POST['cargo'];
+
+        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep', `tipo`='$tipo', `cargo_funcionario`='$cargo',`salario_funcionario`='$salario', `num_identificacao_funcionario`='$identificacao'  WHERE `id`='$id'";
+        $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
+    }
+        $sql =  "SELECT id, nome, email, telefone, cpf, endereco, complemento, cidade, estado, tipo FROM usuarios ORDER BY usuarios.nome ASC";
         $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
         $t="administrador";
             while($row = mysqli_fetch_array($resultado)) {
@@ -65,15 +68,15 @@
                 echo '<th scope="row">'.$row["id"].'</th>';
                 echo ' <td> '.$row["nome"].'</td>';
                 echo ' <td> '.$row["email"].'</td>';
-                if($row["tipo"]==0) {
+                if($row["tipo"]=='0') {
                     $t="Cliente" ;
-                } else if($row["tipo"]==2){ 
+                } else if($row["tipo"]=='2'){ 
                     $t="Administrador";
-                }else{
-                    $t="Funcionario";
+                } else{
+                    $t = "Funcionário";
                 }
                 echo ' <td> '.$t.'</td>';
-                echo '<td><input type="submit" name="id" value="'.$row["id"].'"</td>';
+                echo '<td><input type="submit" name="submit_id" value="'.$row["id"].'" id="submit_id"</td>';
                 echo '</tr>';
             }
             //mysqli_close($conexao);
@@ -83,12 +86,6 @@
 	<tbody>
 	</table>
     <hr>
-
-    <script>
-        function editar(id){
-            
-        }
-    </script>
 
     <!-- Script para fazer a máscara. Com ele, você pode definir qualquer tipo de máscara com o comando onkeypress="mascara(this, '###.###.###-##')". -->
     <script language="JavaScript">
@@ -104,79 +101,119 @@
         }
     </script>
     <!-- Fim do script -->
+    <?php
+    //aplica a mascara fornecida no campo $formato
+    function aplicaMascara($texto, $formato)
+    {
+        $len = strlen($formato);
+        $ret = "";
+        $pos = 0;
+        for($i=0; $i<$len; $i++)
+        {
+            $chr = substr($formato, $i, 1);
+            if($chr == '#')
+            {
+                if($pos <= strlen($texto)){
+                    $ret .= substr($texto, $pos, 1);
+                } else {
+                    $ret .= " ";
+                }
+                $pos++;
+            } else {
+                $ret .= $chr;
+            }
+            
+        }
+        return $ret;
+    }
+
+    //diferencia os dois tipos de numero de telefone, se é celular ou fixo
+    function aplicaMascaraTelefone($telefone)
+    {
+        $len = strlen($telefone);
+        if($len <= 10)
+        {
+            return aplicaMascara($telefone,'## ####-####');
+        } else {
+            return aplicaMascara($telefone,'## #.####-####');
+        }
+    }
+	?>
     <!-- Formulário de Editar Usuário -->
     <?php
+    $id = '';
     $nome = '';
     $email = '';
     $telefone = '';
     $cpf = '';
+    $cnpj='';
     $endereco = '';
     $complemento = '';
     $cidade = '';
     $estado = '';
     $cep = '';
-    $tipo = 0;
+    $identificacao = '';
+    $salario = '';
+    $cargo = '';
+    $tipo = 1;
     if(!empty($_POST)){
-        if(isset($_POST['id'])){
-            if(!empty($_POST['id'])){
+        if(isset($_POST['submit_id'])){
+            if(!empty($_POST['submit_id'])){
                 include_once('conexao.php');
-                $sql = "SELECT * FROM `usuarios` WHERE `id` = ".$_POST['id'];
+                $sql = "SELECT * FROM `usuarios` WHERE `id` = ".$_POST['submit_id'];
                 $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
                 $t="administrador";
                 while($row = mysqli_fetch_array($resultado)) {
+                    $id = $row['id'];
                     $nome = $row['nome'];
                     $email = $row['email'];
                     $telefone = $row['telefone'];
                     $cpf = $row['cpf'];
+                    $cnpj = $row['cnpj'];
                     $endereco = $row['endereco'];
                     $complemento = $row['complemento'];
                     $cidade = $row['cidade'];
                     $estado = $row['estado'];
                     $cep = $row['cep'];
                     $tipo = $row['tipo'];
+                    $identificacao = $row['num_identificacao_funcionario'];
+                    $salario = $row['salario_funcionario'];
+                    $cargo = $row['cargo_funcionario'];
                 }
                 //mysqli_close($conexao);
             }
         }
     }
-    echo '<form action="" method="POST" target="_self">
+    ?>
+    <form action="" method="POST" target="_self">
+    <input type="text" name="submit_id" class="form-control" id="submit_id" placeholder="ID" value="<?php echo $id ?>" hidden>
     <fieldset>
         <legend>Informações Pessoais:</legend>
         <div class="form-row">
             <div class="form-group col-md-6">
             <label for="inputEmail4">Email</label>
-            <input type="name" name="email" class="form-control" id="inputEmail4" placeholder="Email" value="'.$email.'" required>
+            <input type="name" name="email" class="form-control" id="inputEmail4" placeholder="Email" value="<?php echo $email ?>" required>
             </div>
             <div class="form-group col-md-4">
             <label for="inputType">Tipo</label>
-            <select id="inputType" name="tipo" class="form-control" required>';
-            if($tipo==0) {
-                echo '<option selected>Cliente</option>';
-                echo '<option>Administrador</option>';
-                echo '<option>Funcionário</option>';
-            } else if($tipo==2){ 
-                echo '<option selected>Administrador</option>';
-                echo '<option>Cliente</option>';
-                echo '<option>Funcionário</option>';
-            }else{
-                echo '<option selected>Funcionário</option>';
-                echo '<option>Administrador</option>';
-                echo '<option>Cliente</option>';
-            }
-            echo '</select>
+            <select id="inputType" name="tipo" class="form-control" required>;
+                 <option <?php if($tipo == 0) echo 'selected' ?>>Cliente</option>;
+                 <option <?php if($tipo == 2) echo 'selected' ?>>Administrador</option>;
+                 <option <?php if($tipo == 1) echo 'selected' ?>>Funcionário</option>;
+            </select>
         </div>
         <div class="form-row">
             <div class="form-group col-md-8">
             <label for="inputEmail4">Nome</label>
-            <input type="name" name="nome" class="form-control" id="inputNome4" placeholder="Nome" value="'.$nome.'" required>
+            <input type="name" name="nome" class="form-control" id="inputNome4" placeholder="Nome" value="<?php echo $nome ?>" required>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-4">
             <label for="inputPassword4">Telefone</label>
-            <input type="text" name="telefone" class="form-control" id="inputTelefone4" placeholder="(11)1111-1111" onkeypress="mascara(this, "## ####-####")"  maxlength="12" value="'.$telefone.'" required>
+            <input type="text" name="telefone" class="form-control" id="inputTelefone4" placeholder="(11)1111-1111" onkeypress='mascara(this, "## ####-####")' maxlength="12" value="<?php echo aplicaMascaraTelefone($telefone) ?>" required>
             </div>
-            <div class="form-group col-md-2">
+            <div class="form-group col-md-4s">
             <label for="inputPassword4">CPF</label>
-            <input type="text" name="cpf" class="form-control" id="inputCPF4" placeholder="111.111.111-11" onkeypress="mascara(this, "###.###.###-##")"  maxlength="14" value="'.$cpf.'" required>
+            <input type="text" name="cpf" class="form-control" id="inputCPF4" placeholder="111.111.111-11" onkeypress='mascara(this, "###.###.###-##")'  maxlength="14" value="<?php echo aplicaMascara($cpf, "###.###.###-##") ?>" required>
             </div>
         </div>
     </fieldset>
@@ -184,21 +221,21 @@
         <legend>Informações Residenciais:</legend>
         <div class="form-group">
             <label for="inputAddress">Endereço</label>
-            <input type="text" name="endereco" class="form-control" id="inputAddress" placeholder="Av. Rio Branco" value="'.$endereco.'" required>
+            <input type="text" name="endereco" class="form-control" id="inputAddress" placeholder="Av. Rio Branco" value="<?php echo $endereco ?>" required>
         </div>
         <div class="form-group">
             <label for="inputAddress2">Complemento</label>
-            <input type="text" name="complemento" class="form-control" id="inputAddress2" placeholder="Apartamento, estudio, ou andar" value="'.$complemento.'">
+            <input type="text" name="complemento" class="form-control" id="inputAddress2" placeholder="Apartamento, estudio, ou andar" value="<?php echo $complemento ?>">
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
             <label for="inputCity">Cidade</label>
-            <input type="text" name="cidade" class="form-control" id="inputCity" placeholder="Cidade" value="'.$cidade.'" required>
+            <input type="text" name="cidade" class="form-control" id="inputCity" placeholder="Cidade" value="<?php echo $cidade ?>" required>
             </div>
             <div class="form-group col-md-4">
             <label for="inputState">Estado</label>
             <select id="inputState" name="estado" class="form-control" required>
-		<option>'.$estado.'</option>                
+		<option><?php echo $estado ?></option>                
 		<option>AC</option>
                 <option>AL</option>
                 <option>AP</option>
@@ -230,13 +267,12 @@
             </div>
             <div class="form-group col-md-2">
             <label for="inputZip">CEP</label>
-            <input type="text" name="cep" class="form-control" id="cep" onkeypress="mascara(this, "##.###-###")" placeholder="11.111-111" maxlength="10" value="'.$cep.'" required>
+            <input type="text" name="cep" class="form-control" id="cep" onkeypress='mascara(this, "##.###-###")' placeholder="11.111-111" maxlength="10" value="<?php echo aplicaMascara($cep,"##.###-###") ?>" required>
             </div>
         </div>
     </fieldset>
     <button type="submit" class="btn btn-primary" value="Submit" name="submit">Confirmar</button>
-    </form>';
-    ?>
+    </form>'
     <!-- Fim do Formulário de Edição Usuário  -->
     <?php
         if(isset($_POST["submit"]))
