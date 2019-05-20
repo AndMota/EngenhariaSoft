@@ -53,11 +53,7 @@
             $tipo = 1;
         }
 
-        $salario = $_POST['salario'];
-        $identificacao = $_POST['n_identificacao'];
-        $cargo = $_POST['cargo'];
-
-        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep', `tipo`='$tipo', `cargo_funcionario`='$cargo',`salario_funcionario`='$salario', `num_identificacao_funcionario`='$identificacao'  WHERE `id`='$id'";
+        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep', `tipo`='$tipo' WHERE `id`='$id'";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
     }
         $sql =  "SELECT id, nome, email, telefone, cpf, endereco, complemento, cidade, estado, tipo FROM usuarios ORDER BY usuarios.nome ASC";
