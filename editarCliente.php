@@ -33,7 +33,29 @@
     <tbody>
     <form action="editarCliente.php" method="post">
     <?php
-        include_once('conexao.php');
+    /* Ligação com Banco de Dados */
+    include_once("conexao.php");/* Estabelece a conexão */
+    if(isset($_POST["submit"]))
+    {
+
+        $email = $_POST['email'];
+        $nome = $_POST['nome'];
+        $telefone = $_POST['telefone'];
+        $cpf = $_POST['cpf'];
+        $cnpj = $_POST['cnpj'];
+        $endereco = $_POST['endereco'];
+        $complemento = $_POST['complemento'];
+        $cidade = $_POST['cidade'];
+        $estado = $_POST['estado'];
+        $cep = $_POST['cep'];
+        $tipo = 0;
+        if(!strcmp($_POST['tipo'], "Administrador")) {
+            $tipo = 1;
+        }
+
+        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep',`cnpj`='$cnpj'`tipo`='$tipo' WHERE `cpf`='$cpf'";
+        $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
+    }
         $sql =  "SELECT id, nome, email, telefone, cpf, endereco, complemento, cidade, estado FROM usuarios WHERE usuarios.tipo=0 ORDER BY usuarios.nome ASC";
         $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
         $t="administrador";
@@ -210,29 +232,8 @@
     ?>
     <!-- Fim do Formulário de Edição Cliente  -->
     <?php
-    /* Ligação com Banco de Dados */
     if(isset($_POST["submit"]))
     {
-        include_once("conexao.php");/* Estabelece a conexão */
-
-        $email = $_POST['email'];
-        $nome = $_POST['nome'];
-        $telefone = $_POST['telefone'];
-        $cpf = $_POST['cpf'];
-        $cnpj = $_POST['cnpj'];
-        $endereco = $_POST['endereco'];
-        $complemento = $_POST['complemento'];
-        $cidade = $_POST['cidade'];
-        $estado = $_POST['estado'];
-        $cep = $_POST['cep'];
-        $tipo = 0;
-        if(!strcmp($_POST['tipo'], "Administrador")) {
-            $tipo = 1;
-        }
-
-        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep',`cnpj`='$cnpj'`tipo`='$tipo' WHERE `cpf`='$cpf'";
-        $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
-
         if($salvar)
         {
             ?>

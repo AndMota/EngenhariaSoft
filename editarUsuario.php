@@ -14,6 +14,28 @@
 
 <?php
     include "header.php";
+    /* Ligação com Banco de Dados */
+    include_once("conexao.php");/* Estabelece a conexão */
+    if(isset($_POST["submit"]))
+    {
+
+        $email = $_POST['email'];
+        $nome = $_POST['nome'];
+        $telefone = $_POST['telefone'];
+        $cpf = $_POST['cpf'];
+        $endereco = $_POST['endereco'];
+        $complemento = $_POST['complemento'];
+        $cidade = $_POST['cidade'];
+        $estado = $_POST['estado'];
+        $cep = $_POST['cep'];
+        $tipo = 0;
+        if(!strcmp($_POST['tipo'], "Administrador")) {
+            $tipo = 1;
+        }
+
+        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep',`tipo`='$tipo' WHERE `cpf`='$cpf'";
+        $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
+    }
 ?>
 
 <hr>
@@ -33,7 +55,6 @@
     <tbody>
     <form action="editarUsuario.php" method="post">
     <?php
-        include_once('conexao.php');
         $sql =  "SELECT id, nome, email, tipo ";
         $sql .= "FROM usuarios ";
         $sql .= "ORDER BY usuarios.nome ASC";
@@ -218,28 +239,8 @@
     ?>
     <!-- Fim do Formulário de Edição Usuário  -->
     <?php
-    /* Ligação com Banco de Dados */
-    if(isset($_POST["submit"]))
-    {
-        include_once("conexao.php");/* Estabelece a conexão */
-
-        $email = $_POST['email'];
-        $nome = $_POST['nome'];
-        $telefone = $_POST['telefone'];
-        $cpf = $_POST['cpf'];
-        $endereco = $_POST['endereco'];
-        $complemento = $_POST['complemento'];
-        $cidade = $_POST['cidade'];
-        $estado = $_POST['estado'];
-        $cep = $_POST['cep'];
-        $tipo = 0;
-        if(!strcmp($_POST['tipo'], "Administrador")) {
-            $tipo = 1;
-        }
-
-        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep',`tipo`='$tipo' WHERE `cpf`='$cpf'";
-        $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
-
+        if(isset($_POST["submit"]))
+        {
         if($salvar)
         {
             ?>
