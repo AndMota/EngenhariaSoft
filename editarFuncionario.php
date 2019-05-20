@@ -94,6 +94,44 @@
         }
     </script>
     <!-- Fim do script -->
+    <?php
+    //aplica a mascara fornecida no campo $formato
+    function aplicaMascara($texto, $formato)
+    {
+        $len = strlen($formato);
+        $ret = "";
+        $pos = 0;
+        for($i=0; $i<$len; $i++)
+        {
+            $chr = substr($formato, $i, 1);
+            if($chr == '#')
+            {
+                if($pos <= strlen($texto)){
+                    $ret .= substr($texto, $pos, 1);
+                } else {
+                    $ret .= " ";
+                }
+                $pos++;
+            } else {
+                $ret .= $chr;
+            }
+            
+        }
+        return $ret;
+    }
+
+    //diferencia os dois tipos de numero de telefone, se é celular ou fixo
+    function aplicaMascaraTelefone($telefone)
+    {
+        $len = strlen($telefone);
+        if($len <= 10)
+        {
+            return aplicaMascara($telefone,'## ####-####');
+        } else {
+            return aplicaMascara($telefone,'## #.####-####');
+        }
+    }
+	?>
     <!-- Formulário de Editar Funcionário -->
     <?php
     $id = '';
@@ -164,11 +202,11 @@
             </div>
             <div class="form-group col-md-4">
             <label for="inputPassword4">Telefone</label>
-            <input type="text" name="telefone" class="form-control" id="inputTelefone4" placeholder="(11)1111-1111" onkeypress='mascara(this, "## ####-####")' maxlength="12" value="<?php echo $telefone ?>" required>
+            <input type="text" name="telefone" class="form-control" id="inputTelefone4" placeholder="(11)1111-1111" onkeypress='mascara(this, "## ####-####")' maxlength="12" value="<?php echo aplicaMascaraTelefone($telefone) ?>" required>
             </div>
             <div class="form-group col-md-4s">
             <label for="inputPassword4">CPF</label>
-            <input type="text" name="cpf" class="form-control" id="inputCPF4" placeholder="111.111.111-11" onkeypress='mascara(this, "###.###.###-##")'  maxlength="14" value="<?php echo $cpf ?>" required>
+            <input type="text" name="cpf" class="form-control" id="inputCPF4" placeholder="111.111.111-11" onkeypress='mascara(this, "###.###.###-##")'  maxlength="14" value="<?php echo aplicaMascara($cpf, "###.###.###-##") ?>" required>
             </div>
         </div>
     </fieldset>
@@ -222,7 +260,7 @@
             </div>
             <div class="form-group col-md-2">
             <label for="inputZip">CEP</label>
-            <input type="text" name="cep" class="form-control" id="cep" onkeypress='mascara(this, "##.###-###")' placeholder="11.111-111" maxlength="10" value="<?php echo $cep ?>" required>
+            <input type="text" name="cep" class="form-control" id="cep" onkeypress='mascara(this, "##.###-###")' placeholder="11.111-111" maxlength="10" value="<?php echo aplicaMascara($cep,"##.###-###") ?>" required>
             </div>
         </div>
     </fieldset>
@@ -236,7 +274,7 @@
         </div>
         <div class="form-group col-md-4">
             <label for="inputSalario">Salário (R$)</label>
-            <input type="text" name="salario" class="form-control" id="inputSalario" placeholder="111111,11" onkeypress="mascara(this, '######,##')"  maxlength="9" value="<?php echo $salario ?>" required>
+            <input type="text" name="salario" class="form-control" id="inputSalario" placeholder="111111,11" maxlength="9" value="<?php echo $salario ?>" required>
         </div>
         <div class="form-group col-md-4">
             <label for="inputCargo">Cargo</label>
