@@ -196,6 +196,14 @@
     </form>
     <!-- Fim do Formulário de Cadastro de Usuário  -->
     <?php
+    /* limpa campos com mascara */
+    function limparCampos($campo){
+        $campo = str_replace(".", "", $campo);
+        $campo = str_replace("-", "", $campo);
+        $campo = str_replace("/", "", $campo);
+        $campo = str_replace(" ", "", $campo);
+        return $campo;
+    }
     /* Ligação com Banco de Dados */
     if(isset($_POST["submit"]))
     {
@@ -217,6 +225,18 @@
         $salario = $_POST['salario'];
         $cargo = $_POST['cargo'];
         $data = date("Y-m-d");
+
+        $cpf = limparCampos($cpf);
+        $cnpj = limparCampos($cnpj);
+        $cep = limparCampos($cep);
+        $telefone = limparCampos($telefone);
+
+        if($salario == ""){
+            $salario = "0";
+        }
+        if($identificacao == ""){
+            $identificacao = "0";
+        }
 
         $sql = "insert into usuarios (email,senha,nome,telefone,cpf,cnpj,endereco,complemento,cidade,estado,cep,tipo,cargo_funcionario,salario_funcionario,num_identificacao_funcionario,data_entrada_funcionario) values ('$email','$senha','$nome','$telefone','$cpf','$cnpj','$endereco','$complemento','$cidade','$estado','$cep', '$tipo', '$cargo', '$salario', '$identificacao', '$data')";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */

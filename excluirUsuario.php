@@ -18,14 +18,14 @@
 <?php
     include "header.php";
     include_once("conexao.php");/* Estabelece a conexão */
-    if(isset($_POST["cpf"]))
+    if(isset($_POST["submit_id"]))
     {
-        $cpf = $_POST['cpf'];
-        $sql = "DELETE FROM `usuarios` WHERE `usuarios`.`cpf` ='$cpf'";
+        $id = $_POST['submit_id'];
+        $sql = "DELETE FROM `usuarios` WHERE `usuarios`.`id` ='$id'";
         $excluir = mysqli_query($conexao,$sql);/* Exclui os dados no banco */
         $qtd= mysqli_affected_rows($conexao);
     }
-    $sql = "SELECT `email`, `nome`, `cpf` FROM `usuarios` ORDER BY `usuarios`.`nome` ASC";
+    $sql = "SELECT `id`, `email`, `nome`, `cpf` FROM `usuarios` ORDER BY `usuarios`.`nome` ASC";
     $resultado = mysqli_query($conexao, $sql);
     if(($row = mysqli_fetch_array($resultado))!=NULL){
         ?>
@@ -43,7 +43,7 @@
         do {
             echo '<tr>';
             echo ' <td>
-            <center><form action="excluirUsuario.php" method="POST"><INPUT TYPE="hidden" NAME="cpf" VALUE="'.$row["cpf"].'"><input type="submit" class="btn btn-danger" value="Excluir"></form></center></td>';
+            <center><form action="excluirUsuario.php" method="POST"><INPUT TYPE="hidden" NAME="submit_id" VALUE="'.$row["id"].'"><input type="submit" class="btn btn-danger" value="Excluir"></form></center></td>';
 		    echo ' <td> '.$row["cpf"].'</td>';
             echo ' <td> '.$row["nome"].'</td>';
             echo ' <td> '.$row["email"].'</td>';
@@ -53,18 +53,18 @@
         echo '<div class="alert alert-success"><center>Não existem usuarios cadastrados</center></div>';
     }
     echo '</table >';
-	if(isset($_POST["cpf"])){
+	if(isset($_POST["submit_id"])){
         if(!$excluir){
             die(mysqli_error($conexao));
         }
         if($qtd==1){
             ?>
-            <div class="alert alert-success"><center>Usuário com CPF = <?php echo $cpf ?> excluido com sucesso!</center></div>
+            <div class="alert alert-success"><center>Usuário com ID = <?php echo $id ?> excluido com sucesso!</center></div>
             <?php
         }
         else{
             ?>
-            <div class="alert alert-warning"><center>Falha ao tentar excluir o usuário com CPF= <?php echo $cpf ?>!</center></div>
+            <div class="alert alert-warning"><center>Falha ao tentar excluir o usuário com ID= <?php echo $id ?>!</center></div>
             <?php
         } 
     }

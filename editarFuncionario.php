@@ -33,6 +33,14 @@
     <tbody>
     <form action="editarFuncionario.php" method="post">
     <?php
+    /* limpa campos com mascara */
+    function limparCampos($campo){
+        $campo = str_replace(".", "", $campo);
+        $campo = str_replace("-", "", $campo);
+        $campo = str_replace("/", "", $campo);
+        $campo = str_replace(" ", "", $campo);
+        return $campo;
+    }
     /* Ligação com Banco de Dados */
     include_once("conexao.php");/* Estabelece a conexão */
     if(isset($_POST["submit"]))
@@ -57,8 +65,13 @@
         $identificacao = $_POST['n_identificacao'];
         $cargo = $_POST['cargo'];
 
-        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep', `tipo`='$tipo', `cargo_funcionario`='$cargo',`salario_funcionario`='$salario', `num_identificacao_funcionario`='$identificacao'  WHERE `id`='$id'";
-        $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
+        //limpa campos que vem com mascara
+        $cpf = limparCampos($cpf);
+        $cep = limparCampos($cep);
+        $telefone = limparCampos($telefone);
+
+        $sql = "UPDATE `usuarios` SET `email`='$email', `cpf`='$cpf', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep', `tipo`='$tipo', `cargo_funcionario`='$cargo',`salario_funcionario`='$salario', `num_identificacao_funcionario`='$identificacao'  WHERE `id`='$id'";
+        $salvar = mysqli_query($conexao, $sql);/* Escreve os dados no banco */
     }
         $sql =  "SELECT id, nome, email, telefone, cpf, endereco, complemento, cidade, estado FROM usuarios WHERE usuarios.tipo=1 ORDER BY usuarios.nome ASC";
         $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
@@ -98,6 +111,9 @@
     //aplica a mascara fornecida no campo $formato
     function aplicaMascara($texto, $formato)
     {
+        if($texto == ""){
+            return "";
+        }
         $len = strlen($formato);
         $ret = "";
         $pos = 0;

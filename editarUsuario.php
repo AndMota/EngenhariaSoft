@@ -33,6 +33,14 @@
     <tbody>
     <form action="editarUsuario.php" method="post">
     <?php
+    /* limpa campos com mascara */
+    function limparCampos($campo){
+        $campo = str_replace(".", "", $campo);
+        $campo = str_replace("-", "", $campo);
+        $campo = str_replace("/", "", $campo);
+        $campo = str_replace(" ", "", $campo);
+        return $campo;
+    }
     /* Ligação com Banco de Dados */
     include_once("conexao.php");/* Estabelece a conexão */
     if(isset($_POST["submit"]))
@@ -43,19 +51,27 @@
         $nome = $_POST['nome'];
         $telefone = $_POST['telefone'];
         $cpf = $_POST['cpf'];
+        //$cnpj = $_POST['cnpj'];
         $endereco = $_POST['endereco'];
         $complemento = $_POST['complemento'];
         $cidade = $_POST['cidade'];
         $estado = $_POST['estado'];
         $cep = $_POST['cep'];
         $tipo = 0;
+
         if(!strcmp($_POST['tipo'], "Funcionário")) {
             $tipo = 1;
         }else if(!strcmp($_POST['tipo'], "Administrador")) {
             $tipo = 2;
         }
 
-        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep', `tipo`='$tipo' WHERE `id`='$id'";
+        //limpa campos que vem com mascara
+        $cpf = limparCampos($cpf);
+        //$cnpj = limparCampos($cnpj);
+        $cep = limparCampos($cep);
+        $telefone = limparCampos($telefone);
+
+        $sql = "UPDATE `usuarios` SET `email`='$email', `cpf`='$cpf', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep', `tipo`='$tipo' WHERE `id`='$id'";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
     }
         $sql =  "SELECT id, nome, email, telefone, cpf, endereco, complemento, cidade, estado, tipo FROM usuarios ORDER BY usuarios.nome ASC";
@@ -103,6 +119,9 @@
     //aplica a mascara fornecida no campo $formato
     function aplicaMascara($texto, $formato)
     {
+        if($texto == ""){
+            return "";
+        }
         $len = strlen($formato);
         $ret = "";
         $pos = 0;

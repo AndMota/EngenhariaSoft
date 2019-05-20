@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="publico/css/estilo.css">
 </head>
 
+
 <?php
     include "header.php";
 ?>
@@ -33,11 +34,20 @@
     <tbody>
     <form action="editarCliente.php" method="post">
     <?php
+    /* limpa campos com mascara */
+    function limparCampos($campo){
+        $campo = str_replace(".", "", $campo);
+        $campo = str_replace("-", "", $campo);
+        $campo = str_replace("/", "", $campo);
+        $campo = str_replace(" ", "", $campo);
+        return $campo;
+    }
     /* Ligação com Banco de Dados */
     include_once("conexao.php");/* Estabelece a conexão */
     if(isset($_POST["submit"]))
     {
 
+        $id = $_POST['submit_id'];
         $email = $_POST['email'];
         $nome = $_POST['nome'];
         $telefone = $_POST['telefone'];
@@ -53,7 +63,14 @@
             $tipo = 1;
         }
 
-        $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep',`cnpj`='$cnpj', `tipo`='$tipo' WHERE `cpf`='$cpf'";
+        //limpa campos que vem com mascara
+        $cpf = limparCampos($cpf);
+        $cnpj = limparCampos($cnpj);
+        $cep = limparCampos($cep);
+        $telefone = limparCampos($telefone);
+
+
+        $sql = "UPDATE `usuarios` SET `email`='$email', `cpf`='$cpf', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep',`cnpj`='$cnpj', `tipo`='$tipo' WHERE `id`='$id'";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
     }
         $sql =  "SELECT id, nome, email, telefone, cpf, endereco, complemento, cidade, estado FROM usuarios WHERE usuarios.tipo=0 ORDER BY usuarios.nome ASC";
@@ -65,7 +82,8 @@
                 echo ' <td> '.$row["nome"].'</td>';
                 echo ' <td> '.$row["email"].'</td>';
                 echo ' <td> '."Cliente".'</td>';
-                echo '<td><input type="submit" name="id" value="'.$row["id"].'"</td>';
+                //echo '<td><input type="submit" name="id" value="'.$row["id"].'"</td>';
+                echo '<td><input type="submit" name="submit_id" value="'.$row["id"].'" id="submit_id"</td>';
                 echo '</tr>';
             }
             //mysqli_close($conexao);
@@ -96,8 +114,50 @@
         }
     </script>
     <!-- Fim do script -->
+    <?php
+    //aplica a mascara fornecida no campo $formato
+    function aplicaMascara($texto, $formato)
+    {
+        if($texto == ""){
+            return "";
+        }
+        $len = strlen($formato);
+        $ret = "";
+        $pos = 0;
+        for($i=0; $i<$len; $i++)
+        {
+            $chr = substr($formato, $i, 1);
+            if($chr == '#')
+            {
+                if($pos <= strlen($texto)){
+                    $ret .= substr($texto, $pos, 1);
+                } else {
+                    $ret .= " ";
+                }
+                $pos++;
+            } else {
+                $ret .= $chr;
+            }
+            
+        }
+        return $ret;
+    }
+
+    //diferencia os dois tipos de numero de telefone, se é celular ou fixo
+    function aplicaMascaraTelefone($telefone)
+    {
+        $len = strlen($telefone);
+        if($len <= 10)
+        {
+            return aplicaMascara($telefone,'## ####-####');
+        } else {
+            return aplicaMascara($telefone,'## #.####-####');
+        }
+    }
+	?>
     <!-- Formulário de Editar Cliente -->
     <?php
+    $id = '';
     $nome = '';
     $email = '';
     $telefone = '';
@@ -110,13 +170,15 @@
     $cep = '';
     $tipo = 0;
     if(!empty($_POST)){
-        if(isset($_POST['id'])){
-            if(!empty($_POST['id'])){
+        if(isset($_POST['submit_id'])){
+            if(!empty($_POST['submit_id'])){
                 include_once('conexao.php');
-                $sql = "SELECT * FROM `usuarios` WHERE `id` = ".$_POST['id'];
+                $sql = "SELECT * FROM `usuarios` WHERE `id` = ".$_POST['submit_id'];
+                //echo $sql;
                 $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
                 $t="administrador";
                 while($row = mysqli_fetch_array($resultado)) {
+                    $id = $row['id'];
                     $nome = $row['nome'];
                     $email = $row['email'];
                     $telefone = $row['telefone'];
@@ -134,6 +196,7 @@
         }
     }
     echo '<form action="" method="POST" target="_self">
+    <input type="text" name="submit_id" class="form-control" id="submit_id" placeholder="ID" value="'.$id.'" hidden>
     <fieldset>
         <legend>Informações Pessoais:</legend>
         <div class="form-row">
@@ -156,11 +219,11 @@
             </div>
             <div class="form-group col-md-2">
             <label for="inputPassword4">Telefone</label>
-            <input type="text" name="telefone" class="form-control" id="inputTelefone4" placeholder="(11)1111-1111" onkeypress="mascara(this, "## ####-####")"  maxlength="12" value="'.$telefone.'" required>
+            <input type="text" name="telefone" class="form-control" id="inputTelefone4" placeholder="(11)1111-1111" onkeypress="mascara(this, \'## ####-####\')"  maxlength="12" value="'.aplicaMascaraTelefone($telefone).'" required>
             </div>
             <div class="form-group col-md-4s">
             <label for="inputPassword4">CPF</label>
-            <input type="text" name="cpf" class="form-control" id="inputCPF4" placeholder="111.111.111-11" onkeypress="mascara(this, "###.###.###-##")"  maxlength="14" value="'.$cpf.'" required>
+            <input type="text" name="cpf" class="form-control" id="inputCPF4" placeholder="111.111.111-11" onkeypress="mascara(this, \'###.###.###-##\')"  maxlength="14" value="'.aplicaMascara($cpf, "###.###.###-##").'" required>
             </div>
         </div>
     </fieldset>
@@ -214,7 +277,7 @@
             </div>
             <div class="form-group col-md-2">
             <label for="inputZip">CEP</label>
-            <input type="text" name="cep" class="form-control" id="cep" onkeypress="mascara(this, "##.###-###")" placeholder="11.111-111" maxlength="10" value="'.$cep.'" required>
+            <input type="text" name="cep" class="form-control" id="cep" onkeypress="mascara(this, \'##.###-###\')" placeholder="11.111-111" maxlength="10" value="'.aplicaMascara($cep,"##.###-###").'" required>
             </div>
         </div>
     </fieldset>
@@ -223,7 +286,7 @@
     <div class="form-group">
     <div class="form-group col-md-4">
         <label for="inputAddress">CNPJ</label>
-        <input type="text" name="cnpj" class="form-control" id="inputCNPJ4" placeholder="11.111.111/1111-11" onkeypress="mascara(this, "##.###.###/####-##")"  maxlength="18" value="'.$cnpj.'" required>
+        <input type="text" name="cnpj" class="form-control" id="inputCNPJ4" placeholder="11.111.111/1111-11" onkeypress="mascara(this, \'##.###.###/####-##\')"  maxlength="18" value="'.aplicaMascara($cnpj,"##.###.###/####-##").'" required>
     </div>
     </div>
 </fieldset>
