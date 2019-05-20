@@ -51,6 +51,8 @@
         $tipo = 0;
         if(!strcmp($_POST['tipo'], "Funcionário")) {
             $tipo = 1;
+        }else if(!strcmp($_POST['tipo'], "Administrador")) {
+            $tipo = 2;
         }
 
         $sql = "UPDATE `usuarios` SET `email`='$email', `nome`='$nome',`telefone`='$telefone',`endereco`='$endereco',`complemento`='$complemento',`cidade`='$cidade',`estado`='$estado',`cep`='$cep', `tipo`='$tipo' WHERE `id`='$id'";
