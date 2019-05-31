@@ -17,7 +17,7 @@ Nas palavras do gerente de projetos, o sistema deve:<br/>
 
 * CRUD Vendas [![Generic badge](https://img.shields.io/badge/status-Development-red.svg)](https://shields.io/)
 
-## Built With
+## Ferramentas Utilizadas
 
 * [Trello](https://trello.com/) - Usado para organizar as tarefas do time
 * [GitHub](https://github.com/) - Usado para hospedar o sistema de controle de versões
