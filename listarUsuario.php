@@ -17,6 +17,8 @@ include "header.php";
 ?>
 
 <body>
+    <!-- Título da página -->
+    <h1>Usuários</h1>
     <!-- Aqui está o código que trata um POST para a página, neste caso, excluir um usuário -->
     <?php
     if (isset($_POST["submit_id"])) {
@@ -30,23 +32,41 @@ include "header.php";
             <div class="alert alert-success">
                 <center>Usuário com ID = <?php echo $id ?> excluido com sucesso!</center>
             </div>
-        <?php
-    } else {  //Se não, mostra mensagem negativa
-        ?>
-            <div class="alert alert-warning">
-                <center>Falha ao tentar excluir o usuário com ID= <?php echo $id ?>!</center>
-            </div>
-        <?php
+            <?php
+        } else {  //Se não, mostra mensagem negativa
+            ?>
+                <div class="alert alert-warning">
+                    <center>Falha ao tentar excluir o usuário com ID= <?php echo $id ?>!</center>
+                </div>
+            <?php
+        }
     }
-}
-?>
+    ?>
     <!-- Aqui temos alguns filtros -->
-    <form name="formBusca">
+    <form name="formBusca" action="./listarUsuario.php" method="POST">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputBusca">Buscar: </label>
                 <input type="text" name="busca" class="form-control" id="inputBusca" placeholder="Digite aqui um nome para buscar" />
             </div>
+            <div class="form-group col-md-4">
+                <label for="ordenarPor">Ordenar Por: </label>
+                    <select id="orderby" name="orderby" class="form-control" onchange="enviar()">
+                    <option value="0" <?php if(isset($_POST["orderby"])){ if($_POST["orderby"]==0) echo 'selected'; }?>>Nome &uarr;</option>
+                    <option value="1" <?php if(isset($_POST["orderby"])){ if($_POST["orderby"]==1) echo 'selected'; }?>>Nome &darr;</option>
+                    <option value="2" <?php if(isset($_POST["orderby"])){ if($_POST["orderby"]==2) echo 'selected'; }?>>Id &uarr;</option>
+                    <option value="3" <?php if(isset($_POST["orderby"])){ if($_POST["orderby"]==3) echo 'selected'; }?>>Id &darr;</option>                
+                    </select>
+            </div>
+            <div class="form-group col-md-2">
+                    <label for="inputType">Tipo: </label>
+                    <select id="inputType" name="inputType" class="form-control" onchange="enviar()">
+                        <option value="0" <?php if(isset($_POST["inputType"])){ if($_POST["inputType"]==0) echo 'selected'; }?>>Cliente</option>
+                        <option value="1" <?php if(isset($_POST["inputType"])){ if($_POST["inputType"]==1) echo 'selected'; }?>>Funcionário</option>
+                        <option value="2" <?php if(isset($_POST["inputType"])){ if($_POST["inputType"]==2) echo 'selected'; }?>>Administrador</option>    
+                        <option value="3" <?php if(isset($_POST["inputType"])){ if($_POST["inputType"]==3) echo 'selected'; }else echo 'selected'?>>Todos</option>             
+                    </select>
+                </div>
         </div>
     </form>
     <!-- Aqui está o código que lista os usuários na página -->
@@ -67,7 +87,28 @@ include "header.php";
             include_once('conexao.php');
             $sql =  "SELECT id, nome, email, tipo ";
             $sql .= "FROM usuarios ";
-            $sql .= "ORDER BY usuarios.nome ASC";
+            if(isset($_POST["inputType"])){
+                if($_POST["inputType"] != 3)
+                    $sql .= "WHERE tipo = " . $_POST["inputType"] . " ";
+            }
+            if(isset($_POST["orderby"])){
+                switch($_POST["orderby"]){
+                    case 0:
+                        $sql .= "ORDER BY usuarios.nome ASC";
+                        break;
+                    case 1:
+                        $sql .= "ORDER BY usuarios.nome DESC";
+                        break;
+                    case 2:
+                        $sql .= "ORDER BY usuarios.id ASC";
+                        break;
+                    case 3:
+                        $sql .= "ORDER BY usuarios.id DESC";
+                        break;
+                }
+            }else{
+                $sql .= "ORDER BY usuarios.nome ASC";
+            }
             $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
             while ($row = mysqli_fetch_array($resultado)) {
                 echo '<tr>';
@@ -100,20 +141,29 @@ include "header.php";
     <!-- Aqui, um script bara uma busca simple na tabela -->
     <script>
         document.forms.formBusca.addEventListener("submit", function (e){
-            e.preventDefault();
-            var texto = document.forms.formBusca.busca.value;
-            
-            for(i=0; i<document.getElementById("tabela").rows.length; i++){
-                var linha = document.getElementById("tabela").rows[i].cells.namedItem("name");
-                if(linha != null){
-                    if(linha.innerText.toLowerCase().search(texto.toLowerCase()) == -1){  //Se não achou, some
-                        document.getElementById("tabela").rows[i].hidden = true;
-                    }else{
-                        document.getElementById("tabela").rows[i].hidden = false;
+            if(document.activeElement == document.getElementById("inputBusca")){
+                e.preventDefault();     //Previne o envio da solicitação
+
+                //Exibe apenas as linhas com a string de busca
+                var texto = document.forms.formBusca.busca.value;
+                
+                for(i=0; i<document.getElementById("tabela").rows.length; i++){
+                    var linha = document.getElementById("tabela").rows[i].cells.namedItem("name");
+                    if(linha != null){
+                        if(linha.innerText.toLowerCase().search(texto.toLowerCase()) == -1){  //Se não achou, some
+                            document.getElementById("tabela").rows[i].hidden = true;
+                        }else{
+                            document.getElementById("tabela").rows[i].hidden = false;
+                        }
                     }
                 }
             }
         });
+
+        //Envia formulário
+        function enviar(){
+            document.forms.formBusca.submit();
+        }
     </script>
 
 </body>
