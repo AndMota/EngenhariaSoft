@@ -19,37 +19,47 @@ include "header.php";
 <body>
     <!-- Aqui está o código que trata um POST para a página, neste caso, excluir um usuário -->
     <?php
-        if (isset($_POST["submit_id"])) {
-            include_once('conexao.php');
-            $id = $_POST['submit_id'];
-            $sql = "DELETE FROM `usuarios` WHERE `usuarios`.`id` ='$id'";
-            $excluir = mysqli_query($conexao,$sql);/* Exclui os dados no banco */
-            $qtd= mysqli_affected_rows($conexao);
-            if($excluir && $qtd==1){ //Se excluiu, mostra mensagem positiva
-                ?>
-                <script>
-                    alert("Usuário com ID = <?php echo $id ?> excluido com sucesso!");
-                </script>
-                <?php
-            }else{  //Se não, mostra mensagem negativa
-                ?>
-                <script>
-                    alert("Falha ao tentar excluir o usuário com ID= <?php echo $id ?>!");
-                </script>
-                <?php
-            }
-        }
-    ?>
+    if (isset($_POST["submit_id"])) {
+        include_once('conexao.php');
+        $id = $_POST['submit_id'];
+        $sql = "DELETE FROM `usuarios` WHERE `usuarios`.`id` ='$id'";
+        $excluir = mysqli_query($conexao, $sql); /* Exclui os dados no banco */
+        $qtd = mysqli_affected_rows($conexao);
+        if ($excluir && $qtd == 1) { //Se excluiu, mostra mensagem positiva
+            ?>
+            <div class="alert alert-success">
+                <center>Usuário com ID = <?php echo $id ?> excluido com sucesso!</center>
+            </div>
+        <?php
+    } else {  //Se não, mostra mensagem negativa
+        ?>
+            <div class="alert alert-warning">
+                <center>Falha ao tentar excluir o usuário com ID= <?php echo $id ?>!</center>
+            </div>
+        <?php
+    }
+}
+?>
+    <!-- Aqui temos alguns filtros -->
+    <form name="formBusca">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputBusca">Buscar: </label>
+                <input type="text" name="busca" class="form-control" id="inputBusca" placeholder="Digite aqui um nome para buscar" />
+            </div>
+        </div>
+    </form>
     <!-- Aqui está o código que lista os usuários na página -->
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered" id="tabela">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Nome</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Tipo</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col"></th> <!-- Info -->
+                <th scope="col"></th> <!-- Editar -->
+                <th scope="col"></th> <!-- Excluir -->
             </tr>
         </thead>
         <tbody>
@@ -62,7 +72,7 @@ include "header.php";
             while ($row = mysqli_fetch_array($resultado)) {
                 echo '<tr>';
                 echo '<td scope="row">' . $row["id"] . '</td>';
-                echo ' <td> ' . $row["nome"] . '</td>';
+                echo ' <td id="name">' . $row["nome"] . '</td>';
                 echo ' <td> ' . $row["email"] . '</td>';
                 if ($row["tipo"] == '0') {
                     $t = "Cliente";
@@ -86,6 +96,25 @@ include "header.php";
         <tbody>
     </table>
     <hr>
+
+    <!-- Aqui, um script bara uma busca simple na tabela -->
+    <script>
+        document.forms.formBusca.addEventListener("submit", function (e){
+            e.preventDefault();
+            var texto = document.forms.formBusca.busca.value;
+            
+            for(i=0; i<document.getElementById("tabela").rows.length; i++){
+                var linha = document.getElementById("tabela").rows[i].cells.namedItem("name");
+                if(linha != null){
+                    if(linha.innerText.toLowerCase().search(texto.toLowerCase()) == -1){  //Se não achou, some
+                        document.getElementById("tabela").rows[i].hidden = true;
+                    }else{
+                        document.getElementById("tabela").rows[i].hidden = false;
+                    }
+                }
+            }
+        });
+    </script>
 
 </body>
 
