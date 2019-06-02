@@ -77,3 +77,64 @@ fieldset
 .label-filtro {
     padding-right: 1em;
 }
+
+/* customização do menu */
+
+.custom-nav-link {
+    color: #ffffff;
+    display: block;
+    padding: 0rem 1rem;
+}
+.custom-nav-link:hover, .custom-nav-link:focus {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #901b1d;
+    border-radius: 0.25em;
+}
+.custom-nav-link.disabled {
+    color: #ffffff;
+}
+.custom-active {
+    background-color: #901b1d;
+    border-radius: 0.25em;
+}
+.custom-dropdown-active {
+    background-color: #901b1d!important;
+    border-radius: 0.25em;
+    color: #ffffff!important;
+}
+.navbar-nav {
+    height: 1.6em;
+}
+
+/* customização do drop-menu */
+
+.custom-dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+  }
+  
+  .custom-dropdown-item:hover, .custom-dropdown-item:focus {
+    color: #fff;
+    text-decoration: none;
+    background-color: #901b1d;
+  }
+  
+  .custom-dropdown-item.active, .custom-dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #901b1d;
+  }
+  
+  .custom-dropdown-item.disabled, .custom-dropdown-item:disabled {
+    color: #6c757d;
+    background-color: transparent;
+  }

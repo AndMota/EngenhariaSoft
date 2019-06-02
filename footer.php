@@ -20,7 +20,7 @@
 
         <!-- Coluna no Grid -->
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-          <h6 class="text-uppercase mb-4 font-weight-bold">Produtos</h6>
+          <h6 class="text-uppercase mb-4 font-weight-bold">Setores</h6>
           <p>
             <a href="#!">Hortifruti</a>
           </p>
@@ -103,16 +103,6 @@
               <li class="list-inline-item">
                 <a class="btn-floating btn-sm rgba-white-slight mx-1">
                   <i class="fab fa-twitter"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="btn-floating btn-sm rgba-white-slight mx-1">
-                  <i class="fab fa-google-plus-g"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="btn-floating btn-sm rgba-white-slight mx-1">
-                  <i class="fab fa-linkedin-in"></i>
                 </a>
               </li>
             </ul>
