@@ -64,7 +64,7 @@ include "header.php";
                         <option value="0" <?php if(isset($_POST["inputType"])){ if($_POST["inputType"]==0) echo 'selected'; }?>>Cliente</option>
                         <option value="1" <?php if(isset($_POST["inputType"])){ if($_POST["inputType"]==1) echo 'selected'; }?>>Funcionário</option>
                         <option value="2" <?php if(isset($_POST["inputType"])){ if($_POST["inputType"]==2) echo 'selected'; }?>>Administrador</option>    
-                        <option value="3" <?php if(isset($_POST["inputType"])){ if($_POST["inputType"]==3) echo 'selected'; }else echo 'selected'?>>Todos</option>             
+                        <option value="4" <?php if(isset($_POST["inputType"])){ if($_POST["inputType"]==4) echo 'selected'; }else echo 'selected'?>>Todos</option>             
                     </select>
                 </div>
         </div>
@@ -88,8 +88,12 @@ include "header.php";
             $sql =  "SELECT id, nome, email, tipo ";
             $sql .= "FROM usuarios ";
             if(isset($_POST["inputType"])){
-                if($_POST["inputType"] != 3)
+                if($_POST["inputType"] == 0) {
+                    $sql .= "WHERE tipo = 0 OR tipo = 3 ";
+                }
+                else if($_POST["inputType"] != 4) {
                     $sql .= "WHERE tipo = " . $_POST["inputType"] . " ";
+                }
             }
             if(isset($_POST["orderby"])){
                 switch($_POST["orderby"]){
@@ -115,7 +119,7 @@ include "header.php";
                 echo '<td scope="row">' . $row["id"] . '</td>';
                 echo ' <td id="name">' . $row["nome"] . '</td>';
                 echo ' <td> ' . $row["email"] . '</td>';
-                if ($row["tipo"] == '0') {
+                if ($row["tipo"] == '0' || $row["tipo"] == '3') {
                     $t = "Cliente";
                 } else if ($row["tipo"] == '2') {
                     $t = "Administrador";

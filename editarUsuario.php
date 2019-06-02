@@ -82,7 +82,7 @@
                 echo '<th scope="row">'.$row["id"].'</th>';
                 echo ' <td> '.$row["nome"].'</td>';
                 echo ' <td> '.$row["email"].'</td>';
-                if($row["tipo"]=='0') {
+                if($row["tipo"]=='0' || $row["tipo"]=='3') {
                     $t="Cliente" ;
                 } else if($row["tipo"]=='2'){ 
                     $t="Administrador";
@@ -214,7 +214,7 @@
             <div class="form-group col-md-4">
             <label for="inputType">Tipo</label>
             <select id="inputType" name="tipo" class="form-control" required>;
-                 <option <?php if($tipo == 0) echo 'selected' ?>>Cliente</option>;
+                 <option <?php if($tipo == 0 || $tipo == 3) echo 'selected' ?>>Cliente</option>;
                  <option <?php if($tipo == 2) echo 'selected' ?>>Administrador</option>;
                  <option <?php if($tipo == 1) echo 'selected' ?>>Funcionário</option>;
             </select>

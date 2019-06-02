@@ -78,6 +78,16 @@ fieldset
     padding-right: 1em;
 }
 
+legend {
+    white-space: normal;
+    display: table; /* IE10 */
+    width: auto;
+    padding: 0 0.3em;
+}
+
+.btn-submit-row {
+    margin: 1em 0em;
+}
 /* customização do menu */
 
 .custom-nav-link {

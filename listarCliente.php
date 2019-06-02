@@ -155,7 +155,7 @@
     }
     
     include_once('conexao.php');
-    $sql =  "SELECT id, nome, cpf, cidade, estado FROM usuarios WHERE usuarios.tipo=0 ";
+    $sql =  "SELECT id, nome, cpf, cidade, estado FROM usuarios WHERE tipo=0 OR tipo=3 ";
     $order = "";
 
     if($ordemAlfabetica){
