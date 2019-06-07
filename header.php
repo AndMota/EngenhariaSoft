@@ -58,15 +58,7 @@ else {
         </div>
       </li>
 
-      <li class="nav-item dropdown">
-        <a class="custom-nav-link dropdown-toggle <?php echo checarAtivo(['listarProdutos', 'detalheProdutos', 'cadastroProdutos', 'editarProdutos']);?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         Setores
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="custom-dropdown-item <?php echo checarAtivo(['cadastroSetores']);?>" href="cadastroSetores.php">Cadastrar</a>
-          <a class="custom-dropdown-item <?php echo checarAtivo(['listarSetores', 'detalheSetores']);?>" href="listarSetores.php">Listar</a>
-        </div>
-      </li>
+      
       <?php else: ?>
       <li class="nav-item">
         <a class="custom-nav-link <?php echo checarAtivo(['produtos']); ?>" href="produtos.php">Produtos</a>
@@ -102,7 +94,15 @@ else {
       <?php endif; ?>
 
       <?php if($tipo_usuario == 'administrador'):?>
-      
+      <li class="nav-item dropdown">
+        <a class="custom-nav-link dropdown-toggle <?php echo checarAtivo(['listarProdutos', 'detalheProdutos', 'cadastroProdutos', 'editarProdutos']);?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Setores
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="custom-dropdown-item <?php echo checarAtivo(['cadastroSetores']);?>" href="cadastroSetores.php">Cadastrar</a>
+          <a class="custom-dropdown-item <?php echo checarAtivo(['listarSetores', 'detalheSetores']);?>" href="listarSetores.php">Listar</a>
+        </div>
+      </li>
       <?php endif; ?>
 
 
