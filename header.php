@@ -102,13 +102,7 @@ else {
       <?php endif; ?>
 
       <?php if($tipo_usuario == 'administrador'):?>
-      <li class="nav-item">
-        <a class="custom-nav-link <?php echo checarAtivo(['listarCliente', 'detalheCliente', 'editarCliente']); ?>" href="listarCliente.php">Clientes</a>
-      </li>
       
-      <li class="nav-item">
-        <a class="custom-nav-link <?php echo checarAtivo(['listarFuncionario', 'detalheFuncionario', 'editarFuncionario']); ?>" href="listarFuncionario.php">Funcionários</a>
-      </li>
       <?php endif; ?>
 
 
