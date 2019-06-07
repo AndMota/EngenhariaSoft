@@ -26,11 +26,12 @@
     $sql .= "WHERE id=" . $_POST["submit_id"];
     $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
     $row = mysqli_fetch_array($resultado);
-    if($row["tipo"]==0) {
+    $t = $row['tipo'];
+    if($row['tipo']==0 || $row['tipo']==3) {
         $t="Cliente" ;
-    } else if($row["tipo"]==1){ 
+    } else if($row['tipo']==1){ 
         $t="Funcionário";
-    }else if($row["tipo"]==2){
+    }else if($row['tipo']==2){
         $t="Administrador";
     }
 
@@ -85,9 +86,17 @@
             <tr>
                 <td class="td-userlist">CPF:</td><td><?php echo aplicaMascara($row['cpf'],'###.###.###-##');?></td>
             </tr>
-            <tr id="linha_cnpj">
+            <?php
+                if($row['tipo'] == 3){ ?>
+            <tr>
                 <td class="td-userlist">CNPJ:</td><td id="cnpj"><?php echo aplicaMascara($row['cnpj'],'##.###.###/####-##');?></td>
             </tr>
+            <?php
+                }
+                else{
+
+                }
+            ?>
             <tr>
                 <td class="td-userlist">E-mail:</td><td><?php echo $row['email'];?></td>
             </tr>
@@ -134,11 +143,6 @@
             document.getElementById("func_salario").hidden = true;
             document.getElementById("func_entrada").hidden = true;
             document.getElementById("func_numero").hidden = true;
-        }
-
-        //Esconde cnpj se não existe
-        if(document.getElementById("cnpj").textContent[0] == " "){
-            document.getElementById("linha_cnpj").parentNode.removeChild(document.getElementById("linha_cnpj"));
         }
     </script>
 
