@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 20-Maio-2019 às 07:37
+-- Generation Time: 07-Jun-2019 às 21:47
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.4
 
@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `lojaze`
 --
-CREATE DATABASE IF NOT EXISTS `lojaze` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `lojaze` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `lojaze`;
 
 -- --------------------------------------------------------
@@ -114,22 +114,22 @@ INSERT INTO `produtos` (`id`, `nome`, `fabricante`, `codigo_barras`, `preco`, `i
 
 DROP TABLE IF EXISTS `setores`;
 CREATE TABLE IF NOT EXISTS `setores` (
-  `id` int(11) NOT NULL,
   `nome` text,
-  `descricao` text,
-  `id_admistrador` int(11) DEFAULT NULL,
-  `num_identificacao` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `id_administrador` int(11) DEFAULT NULL,
+  `num_identificacao` int(11) NOT NULL,
+  PRIMARY KEY (`num_identificacao`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `setores`
 --
 
-INSERT INTO `setores` (`id`, `nome`, `descricao`, `id_admistrador`, `num_identificacao`) VALUES
-(0, 'Açougue', 'Carnes', 6, 1),
-(1, 'Bebidas', 'Água, Cerveja e Refrigerantes', 6, 2),
-(2, 'Limpeza', 'Sabão, Detergente e Água Sanitária', 6, 3);
+INSERT INTO `setores` (`nome`, `id_administrador`, `num_identificacao`) VALUES
+('Laticinios', 6, 1887),
+('Enlatados', 12, 3229),
+('Produtos de Limpeza', 10, 5591),
+('Verduras', 12, 5627),
+('Bebidas', 10, 6512);
 
 -- --------------------------------------------------------
 
@@ -164,7 +164,6 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `senha`, `nome`, `telefone`, `cpf`, `cnpj`, `endereco`, `complemento`, `cidade`, `estado`, `cep`, `tipo`, `cargo_funcionario`, `salario_funcionario`, `data_entrada_funcionario`, `num_identificacao_funcionario`) VALUES
-(1, 'azs201@hotmail.com', '1234', 'Aline Zoldinick da Silva', '2222333369', '12222554698', '03907074000102', 'Rua Local nome grande', 'PrÃ©dio 6', 'Juiz de Fora', 'MG', '12355555', 0, '', 0, '0000-00-00', 0),
 (2, 'will.oli@gmail.com', '1234', 'Wilson Ferreira Oliveira', '988888888', '12345678999', '72988935000139', 'Rua UFJF', '', 'Governador Valadares', 'MG', '224659863', 0, '', 0, '0000-00-00', 0),
 (3, 'hallack@gmail.com', '1234', 'Thompson Hallack', '3212345678', '11111111111', '86677709000141', 'Avenida Circular', 'Bloco 6, apto 305', 'Resende', 'RJ', '8215463', 0, '', 0, '0000-00-00', 0),
 (4, 'gorob@hotmail.com', '1234', 'Gorobina Juventinas', '44945617326', '12344456487', NULL, 'Rua SÃ£o Pedro', '', 'Barra Mansa', 'RJ', '31899564', 1, 'Vendedor', 1400, '2018-11-02', 100),
