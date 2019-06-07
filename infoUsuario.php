@@ -28,10 +28,10 @@
     $row = mysqli_fetch_array($resultado);
     if($row["tipo"]==0) {
         $t="Cliente" ;
-    } else if($row["tipo"]==2){ 
-        $t="Administrador";
-    }else{
+    } else if($row["tipo"]==1){ 
         $t="Funcionário";
+    }else if($row["tipo"]==2){
+        $t="Administrador";
     }
 
     mysqli_close($conexao);
