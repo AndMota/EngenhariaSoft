@@ -21,11 +21,18 @@
 <?php
     include_once('conexao.php');
 
-    $sql =  "SELECT id, nome, cpf, email, telefone, endereco, complemento, cidade, estado, cep, tipo, cnpj ";
+    $sql =  "SELECT * ";
     $sql .= "FROM usuarios ";
-    $sql .= "WHERE id=" . $_GET["id"];
+    $sql .= "WHERE id=" . $_POST["submit_id"];
     $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
     $row = mysqli_fetch_array($resultado);
+    if($row["tipo"]==0) {
+        $t="Cliente" ;
+    } else if($row["tipo"]==2){ 
+        $t="Administrador";
+    }else{
+        $t="Funcionário";
+    }
 
     mysqli_close($conexao);
      
@@ -66,22 +73,20 @@
         }
     }
 	?>
-    <?php if($row['tipo']!=0){
-        echo '<br><center><b>ERRO!!! Não é um cliente!!!</b></center><br>';
-    }else{
-    ?>
-	
-    <table class ="table table-striped table-bordered">
+    
+	<table class ="table table-striped table-bordered">
+        <thead>
+                <tr><th colspan="2" scope="col">Dados do(a) usuário(a) #<?php echo $row['id'];?></th></tr>
+        </thead>
         <tbody>
-            <thead>
-                <tr><th colspan="2" scope="col">Dados do(a) cliente #<?php echo $row['id'];?></th></tr>
-            </thead>
-
             <tr>
                 <td class="td-userlist">Nome:</td><td><?php echo $row['nome'];?></td>
             </tr>
             <tr>
                 <td class="td-userlist">CPF:</td><td><?php echo aplicaMascara($row['cpf'],'###.###.###-##');?></td>
+            </tr>
+            <tr id="linha_cnpj">
+                <td class="td-userlist">CNPJ:</td><td id="cnpj"><?php echo aplicaMascara($row['cnpj'],'##.###.###/####-##');?></td>
             </tr>
             <tr>
                 <td class="td-userlist">E-mail:</td><td><?php echo $row['email'];?></td>
@@ -105,19 +110,41 @@
                 <td class="td-userlist">CEP:</td><td><?php echo aplicaMascara($row['cep'],'##.###-###');?></td>
             </tr>
             <tr>
-                <td class="td-userlist">CNPJ:</td><td><?php echo aplicaMascara($row['cnpj'],'##.###.###/####-##');?></td>
+                <td class="td-userlist">Tipo:</td><td id="tipo"><?php echo $t;?></td>
             </tr>
-        <tbody>
+                <tr id="func_cargo">
+                    <td class="td-userlist">Cargo:</td><td><?php echo $row['cargo_funcionario'];?></td>
+                </tr>
+                <tr id="func_salario">
+                    <td class="td-userlist">Salário:</td><td>R$ <?php echo $row['salario_funcionario'];?></td>
+                </tr>
+                <tr id="func_entrada">
+                    <td class="td-userlist">Data entrada:</td><td><?php echo $row['data_entrada_funcionario'];?></td>
+                </tr>
+                <tr id="func_numero">
+                    <td class="td-userlist">Número de Identificação:</td><td><?php echo $row['num_identificacao_funcionario'];?></td>
+                </tr>
+        </tbody>
 	</table>
-    <hr>
+
+    <script>
+        //Esconde informações de funcionário se não é um funcionário
+        if(document.getElementById("tipo").innerText.search("Funcionário") == -1){
+            document.getElementById("func_cargo").hidden = true;
+            document.getElementById("func_salario").hidden = true;
+            document.getElementById("func_entrada").hidden = true;
+            document.getElementById("func_numero").hidden = true;
+        }
+
+        //Esconde cnpj se não existe
+        if(document.getElementById("cnpj").textContent[0] == " "){
+            document.getElementById("linha_cnpj").parentNode.removeChild(document.getElementById("linha_cnpj"));
+        }
+    </script>
 
 </body>
 
-<hr>
-
-
 <?php
-}
     include "footer.php";
 ?>
 

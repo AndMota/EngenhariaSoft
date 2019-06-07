@@ -128,7 +128,7 @@ include "header.php";
                 }
                 echo ' <td> ' . $t . '</td>';
                 echo ' <td>
-                <center><form action="detalheUsuario.php" method="POST"><INPUT TYPE="hidden" NAME="submit_id" VALUE="' . $row["id"] . '"/><INPUT TYPE="hidden" NAME="tipo" VALUE="' . $row["tipo"] . '"/><input type="submit" class="btn btn-info" value="Info"></form></center></td>';
+                <center><form action="infoUsuario.php" method="POST"><INPUT TYPE="hidden" NAME="submit_id" VALUE="' . $row["id"] . '"/><input type="submit" class="btn btn-info" value="Info"></form></center></td>';
                 echo ' <td>
                 <center><form action="editarUsuario.php" method="POST"><INPUT TYPE="hidden" NAME="submit_id" VALUE="' . $row["id"] . '"/><input type="submit" class="btn btn-warning" value="Editar"></form></center></td>';
                 echo ' <td>
