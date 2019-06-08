@@ -11,7 +11,7 @@ Nas palavras do gerente de projetos, o sistema deve:<br/>
 
 * Sistema de Login [![Generic badge](https://img.shields.io/badge/status-Ready-green.svg)](https://shields.io/)
 
-* CRUD Setor [![Generic badge](https://img.shields.io/badge/status-Development-red.svg)](https://shields.io/)
+* CRUD Setor [![Generic badge](https://img.shields.io/badge/status-Ready-green.svg)](https://shields.io/)
 
 * CRUD Produtos [![Generic badge](https://img.shields.io/badge/status-Development-red.svg)](https://shields.io/)
 
