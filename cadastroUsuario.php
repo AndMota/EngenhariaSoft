@@ -46,7 +46,7 @@
                         <option value="2">Administrador</option>                
                     </select>
                 <?php else: ?>
-                    <select id="inputType" name="tipo" class="form-control" required>
+                    <select id="inputType" name="tipo" class="form-control" onchange="changeType()" required>
                         <option value="0" selected="selected">Cliente (Pessoa Física)</option>
                         <option value="3">Cliente (Pessoa Jurídica)</option>
                     </select>
@@ -65,7 +65,7 @@
                     <label for="inputTelefone">Telefone</label>
                     <input type="text" name="telefone" class="form-control" id="inputTelefone" placeholder="xx xxxx-xxx" onkeypress="mascara(this, '## ####-####')"  maxlength="12" required>
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-2" id="formGroupCPF">
                     <label for="inputCPF">CPF</label>
                     <input type="text" name="cpf" class="form-control" id="inputCPF" placeholder="xxx.xxx.xxx-xx" onkeypress="mascara(this, '###.###.###-##')"  maxlength="14" required>
                 </div>
@@ -170,7 +170,9 @@
                     //document.getElementById("fieldsetCliente").hidden = false;
                     document.getElementById("fieldsetFuncionario").hidden = true;
                     $('#formGroupCNPJ').hide();
+                    $('#formGroupCPF').show();
 
+                    document.getElementById("inputCPF").required = true;
                     document.getElementById("inputCNPJ").required = false;
                     document.getElementById("inputIdentifier").required = false;
                     document.getElementById("inputSalario").required = false;
@@ -179,8 +181,10 @@
                     //document.getElementById("fieldsetCliente").hidden = false;
                     document.getElementById("fieldsetFuncionario").hidden = true;
                     $('#formGroupCNPJ').show();
+                    $('#formGroupCPF').hide();
 
                     document.getElementById("inputCNPJ").required = true;
+                    document.getElementById("inputCPF").required = false;
                     document.getElementById("inputIdentifier").required = false;
                     document.getElementById("inputSalario").required = false;
                     document.getElementById("inputCargo").required = false;
@@ -188,7 +192,9 @@
                     //document.getElementById("fieldsetCliente").hidden = true;
                     document.getElementById("fieldsetFuncionario").hidden = false;
                     $('#formGroupCNPJ').hide();
+                    $('#formGroupCPF').show();
 
+                    document.getElementById("inputCPF").required = true;
                     document.getElementById("inputCNPJ").required = false;
                     document.getElementById("inputIdentifier").required = true;
                     document.getElementById("inputSalario").required = true;
@@ -197,7 +203,9 @@
                     //document.getElementById("fieldsetCliente").hidden = true;
                     document.getElementById("fieldsetFuncionario").hidden = true;
                     $('#formGroupCNPJ').hide();
+                    $('#formGroupCPF').show();
 
+                    document.getElementById("inputCPF").required = true;
                     document.getElementById("inputCNPJ").required = false;
                     document.getElementById("inputIdentifier").required = false;
                     document.getElementById("inputSalario").required = false;

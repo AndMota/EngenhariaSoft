@@ -148,3 +148,33 @@ legend {
     color: #6c757d;
     background-color: transparent;
   }
+
+  /* pagina de produtos */
+
+  .botoes-produtos {
+    padding-top: 94px;
+  }
+  .qtd-size {
+      width: 4em;
+  }
+  .btn-acao-produto {
+      color: #000;
+      cursor: pointer;
+      font-size: 1em;
+  }
+  .btn-finalizar-compra {
+    margin-top: 2em;
+  }
+  .no-padding {
+    padding: 0px;
+  }
+  .largura-preco {
+      width: 6em;
+  }
+  .td-acao-produto {
+    width: 3em;
+    text-align: center;
+  }
+  .col-fieldset {
+      width: 50%;
+  }
