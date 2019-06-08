@@ -46,19 +46,21 @@
                     <label for="inputDesconto">Desconto</label>
                     <input type="desconto" name="desconto" class="form-control" id="inputDesconto" placeholder="R$00,00" maxlength="9" required>
                 </div>
+                
                 <div class="form-group col-md-4">
                     <label for="pickSetor">Setor </label>
                      <select id="department" name="setor" class="form-control" onchange="enviar()">
-                        <?php 
+                        <?php
                         include_once('conexao.php');
-                        $sql =  "SELECT nome, id FROM setores";
+                        $sql =  "SELECT nome, num_identificacao FROM setores";
                         $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
                         while($row = mysqli_fetch_array($resultado)) {
-                            echo '<option value= ' .$row["id"].'>'.$row["nome"]. '</option>';    
+                            echo '<option value= ' .$row["num_identificacao"].'>'.$row["nome"]. '</option>';    
                         }
                         ?>
                      </select>
                 </div>
+                
                 <div class="form-group col-md-4">
                     <label for="inputQuantidade">Quantidade</label>
                     <input type="amount" name="quantidade" class="form-control" id="inputQuantidade" placeholder="Quantidade" required>
@@ -88,7 +90,7 @@
         $setor = $_POST['setor'];
         $desconto = $_POST['desconto'];
 
-        $sql = "insert into produtos (nome, id_fabricante, preco, quantidade, setor) values ('$nome','$fabricante', '$preco', '$quantidade', '$setor')";
+        $sql = "insert into produtos (nome, fabricante, preco, quantidade_estoque, id_setor, desconto) values ('$nome','$fabricante', '$preco', '$quantidade', '$setor', '$desconto')";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
 
         if($salvar)
