@@ -21,7 +21,7 @@
 <?php
     include_once('conexao.php');
 
-    $sql =  "SELECT setores.nome as n, setores.num_identificacao, setores.id_administrador, usuarios.nome, usuarios.id FROM setores INNER JOIN usuarios ON usuarios.tipo=2 AND usuarios.id=setores.id_administrador ";
+    $sql =  "SELECT setores.nome as n, setores.num_identificacao, setores.id_administrador, usuarios.nome, usuarios.id FROM setores INNER JOIN usuarios ON usuarios.tipo=2 AND usuarios.id=setores.id_administrador  WHERE num_identificacao= " . $_POST["submit_numero"];
     $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
     $row = mysqli_fetch_array($resultado);
 
