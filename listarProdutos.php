@@ -19,9 +19,32 @@ include "header.php";
 <body>
     <!-- Título da página -->
     <h1>Produtos</h1>
+    <!-- Aqui está o código que trata um POST para a página, neste caso, excluir um setor -->
+    <?php
+    if (isset($_POST["submit_numero"])) {
+        include_once('conexao.php');
+        $numero = $_POST['submit_numero'];
+        $sql = "DELETE FROM `produtos` WHERE `produtos`.`id` ='$numero'";
+        $excluir = mysqli_query($conexao, $sql); /* Exclui os dados no banco */
+        $qtd = mysqli_affected_rows($conexao);
+        if ($excluir && $qtd == 1) { //Se excluiu, mostra mensagem positiva
+            ?>
+            <div class="alert alert-success">
+                <center>Produto com id = <?php echo $numero ?> excluido com sucesso!</center>
+            </div>
+            <?php
+        } else {  //Se não, mostra mensagem negativa
+            ?>
+                <div class="alert alert-warning">
+                    <center>Falha ao tentar excluir o produto com id= <?php echo $numero ?>!</center>
+                </div>
+            <?php
+        }
+    }
+    ?>
     
     <!-- Aqui temos alguns filtros -->
-    <form name="formBusca" action="./produtos.php" method="POST">
+    <form name="formBusca" action="./listarProdutos.php" method="POST">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="inputBusca">Buscar: </label>
@@ -42,12 +65,16 @@ include "header.php";
             </div>
         </div>
     </form>
+    <!-- Aqui está o código que lista os setores na página -->
     <table class="table table-striped table-bordered" id="tabela">
         <thead>
             <tr>
+                <th scope="col">ID</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Fabricante</th>
                 <th scope="col">Preço</th>
+                <th scope="col">Desconto</th>
+                <th scope="col">Preço Promocional</th>
                 <th scope="col">Estoque</th>
                 <th scope="col">Setor</th>
                 <th scope="col"></th> <!-- Info -->
@@ -92,12 +119,22 @@ include "header.php";
             $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
             while ($row = mysqli_fetch_array($resultado)) {
                 echo '<tr>';
+                echo '<td>' . $row["id"] . '</td>';
                 echo '<td id="name">' . $row["nome"] . '</td>';
                 echo '<td>' . $row["fabricante"] . '</td>';
+                echo '<td>' . $row["preco"] . '</td>';
+                echo '<td>' . $row["desconto"] . '</td>';
                 $preco=$row["preco"]-$row["desconto"];
-                echo '<td>' . number_format($preco,2,",","") . '</td>';
+                echo '<td>' . number_format($preco,2,".","") . '</td>';
                 echo '<td>' . $row["quantidade_estoque"] . '</td>';
                 echo '<td>' . $row["nomeSetor"] . '</td>';
+                echo ' <td>
+                <center><form action="infoProduto.php" method="POST"><INPUT TYPE="hidden" NAME="submit_numero" VALUE="' . $row["id"] . '"/><input type="submit" class="btn btn-info" value="Info"></form></center></td>';
+                echo ' <td>
+                <center><form action="editarProduto.php" method="POST"><INPUT TYPE="hidden" NAME="submit_numero" VALUE="' . $row["id"] . '"/><input type="submit" class="btn btn-warning" value="Editar"></form></center></td>';
+                echo ' <td>
+                <center><form action="listarProdutos.php" method="POST"><INPUT TYPE="hidden" NAME="submit_numero" VALUE="' . $row["id"] . '"/><input type="submit" class="btn btn-danger" value="Excluir"></form></center></td>';
+                echo '</tr>';
             }
             mysqli_close($conexao);
 

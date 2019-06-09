@@ -21,7 +21,7 @@
 <?php
     include_once('conexao.php');
 
-    $sql =  "SELECT setores.nome as n, setores.num_identificacao, setores.id_administrador, usuarios.nome, usuarios.id FROM setores INNER JOIN usuarios ON usuarios.tipo=2 AND usuarios.id=setores.id_administrador  WHERE num_identificacao= " . $_POST["submit_numero"];
+    $sql =  "SELECT produtos.id, produtos.nome, produtos.fabricante, produtos.preco, produtos.desconto, produtos.quantidade_estoque, setores.nome as nomeSetor FROM produtos INNER JOIN setores ON produtos.id_setor=setores.num_identificacao WHERE produtos.id=".$_POST['submit_numero'];
     $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
     $row = mysqli_fetch_array($resultado);
 
@@ -30,21 +30,31 @@
     
 	<table class ="table table-striped table-bordered">
         <thead>
-                <tr><th colspan="2" scope="col">Dados do setor de número <?php echo $row['num_identificacao'];?></th></tr>
+                <tr><th colspan="2" scope="col">Dados do produto de ID <?php echo $_POST['submit_numero'];?></th></tr>
         </thead>
         <tbody>
             <tr>
-                <td class="td-userlist">Nome:</td><td><?php echo $row['n'];?></td>
+                <td class="td-userlist">Nome:</td><td><?php echo $row['nome'];?></td>
             </tr>
             <tr>
-                <td class="td-userlist">Número de indentificação:</td><td><?php echo $row['num_identificacao'];?></td>
+                <td class="td-userlist">Fabricante:</td><td><?php echo $row['fabricante'];?></td>
+            </tr>
+            <tr>    
+                <td class="td-userlist">Preço:</td><td><?php echo $row['preco'];?></td>
             </tr>
             <tr>
-                <td class="td-userlist">Administrador responsável:</td><td><?php echo $row['nome'];?></td>
+                <td class="td-userlist">Desconto:</td><td><?php echo $row['desconto'];?></td>
+            </tr>
+            <tr>    
+                <td class="td-userlist">Preço Promocional:</td><td><?php $preco = $row['preco']-$row['desconto']; echo number_format($preco,2,".","");?></td>
             </tr>
             <tr>
-                <td class="td-userlist">ID do administrador:</td><td><?php echo $row['id_administrador'];?></td>
+                <td class="td-userlist">Quantidade em estoque:</td><td><?php echo $row['quantidade_estoque'];?></td>
             </tr>
+            <tr>
+                <td class="td-userlist">Setor:</td><td><?php echo $row['nomeSetor'];?></td>
+            </tr>
+            
         </tbody>
 	</table>
 
