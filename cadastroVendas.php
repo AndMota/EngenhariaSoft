@@ -45,13 +45,14 @@
         $idFuncionario = $_POST['idFuncionario'];
     }
     if(isset($_POST['valorTotal'])){
-        $valorTotal = $_POST['valorTotal'];
+        $valorTotal = str_replace("R$", "", $_POST['valorTotal']);
+        $valorTotal = str_replace(",", ".", $valorTotal);
     }
     if(isset($_POST['listaProdutos'])){
         $produtos = json_decode($_POST['listaProdutos'], true);
     }
     //var_dump($_POST);
-    //if(isset($_POST["submit"])){
+    if(isset($_POST["idCliente"])){
         $sql = "insert into vendas (id_cliente, id_funcionario, data_venda, valor_total) values ('$idCliente','$idFuncionario','$data','$valorTotal')";
         //echo $sql . "<br>";
         $salvar = mysqli_query($conexao, $sql);/* Escreve os dados no banco */
@@ -78,8 +79,9 @@
         {
             die(mysqli_error($conexao));
         }
-    //}
+    }
     mysqli_close($conexao);
+    $_POST = array();
 ?>
 
 <script>
@@ -130,7 +132,7 @@ function onChangeTextoProduto(){
     if(txtBuscaProduto != null){
         termo = txtBuscaProduto.value;
     }
-    console.log(termo);
+    //console.log(termo);
 
     //if(txtBuscaProduto.value.length >= 2){
         $.get('autocompleteProdutos.php?termo=' + termo, function(contents) {
@@ -145,7 +147,7 @@ function onChangeTextoProduto(){
 
     $("#alertErro").hide();
 }
-onChangeTextoProduto();
+
 function clickAdicionaProduto(nome, id, preco){
     var quantidadeElement = document.getElementById("quantidade");
     var quantidade = 0;
@@ -170,7 +172,7 @@ function clickRemoveProduto(indice){
 }
 function updateCarrinho(){
     var template = '<tr><th scope="row">{indice}</th><td>{nome}</td><td>{qtd}</td><td>{preco}</td><td class="td-acao-produto"><a class="btn-acao-produto" onclick="clickRemoveProduto({indice})"><i class="fas fa-times"></i></a></td></tr>'
-    var templateVazio = '<tr><td colspan="4" class="text-center">Adicione produtos ao carrinho</td><tr>';
+    var templateVazio = '<tr><td colspan="5" class="text-center">Adicione produtos ao carrinho</td><tr>';
     var conteudo = "";
     var valorTotal = 0;
     var jsonData = [];
@@ -181,7 +183,7 @@ function updateCarrinho(){
         conteudo += template.replace('{indice}', ind)
         .replace('{indice}', ind)
         .replace('{nome}', produto.nome)
-        .replace('{preco}', "R$ " + produto.preco)
+        .replace('{preco}', formataMoeda(produto.preco))
         .replace('{qtd}', produto.quantidade);
 
         valorTotal += produto.preco * produto.quantidade;
@@ -197,9 +199,13 @@ function updateCarrinho(){
     } else {
         $("#tableProdutosCarrinho").html(conteudo);
     }
-    
+
     $("#listaProdutos").val(JSON.stringify(jsonData));
-    $("#valorTotal").val(valorTotal);
+    $("#valorTotal").val(formataMoeda(valorTotal));
+}
+
+function formataMoeda(valor){
+    return parseFloat(valor).toLocaleString("pt-BR", { style: "currency" , currency:"BRL"});
 }
 
 function validarForm(){
@@ -229,6 +235,7 @@ function validarForm(){
 
 <body>
     <form name="formVenda" action="" method="POST" target="_self" autocomplete="off">
+        <?php //echo $_POST;?>
         <input type="hidden" name="listaProdutos" id="listaProdutos">
         <fieldset>
             <legend>Cadastro de Vendas</legend>
@@ -270,26 +277,28 @@ function validarForm(){
                         </div>
                     </div>
                     <div class="form-row">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Produto</th>
-                                <th scope="col" class="largura-preco">Preço</th>
-                                <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableProdutosDisponiveis">
-                                <!--
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Sabão em pó Omo</td>
-                                    <td>R$ 5,99</td>
-                                    <td class="td-acao-produto"><a class="btn-acao-produto" onclick="clickAdicionaProduto('teste', 0, 1)"><i class="fas fa-times"></i></a></td>
-                                </tr>
-                                -->
-                            </tbody>
-                        </table>
+                        <div class="scroll-container produtos-disp-cont">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Produto</th>
+                                    <th scope="col" class="largura-preco">Preço</th>
+                                    <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableProdutosDisponiveis">
+                                    <!--
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Sabão em pó Omo</td>
+                                        <td>R$ 5,99</td>
+                                        <td class="td-acao-produto"><a class="btn-acao-produto" onclick="clickAdicionaProduto('teste', 0, 1)"><i class="fas fa-times"></i></a></td>
+                                    </tr>
+                                    -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="col">
@@ -300,33 +309,37 @@ function validarForm(){
                             <input type="text" name="valorTotal" id="valorTotal" class="form-control" oninput="onChangeTextoProduto()" readonly>
                         </div>
                         <div class="col">
-                            <button type="button" id="btnFinalizar" onclick="validarForm()" class="form-control btn btn-success btn-finalizar-compra">Finalizar Compra</button>
+                            <button type="button" id="btnFinalizar" onclick="validarForm()" class="form-control btn btn-success btn-finalizar-compra">Finalizar Venda</button>
                         </div>
                     </div>
-                   <table class="table table-striped">
-                        <thead>
-                            <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Produto</th>
-                            <th scope="col">Quantidade</th>
-                            <th scope="col" class="largura-preco">Preço</th>
-                            <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableProdutosCarrinho">
-                            <tr>
-                                <td colspan="4" class="text-center">Adicione produtos ao carrinho</td>
-                            <tr>
-                            <!--
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Sabão em pó Omo</td>
-                                <td>1</td>
-                                <td class="td-acao-produto"><a class="btn-acao-produto" onclick="clickRemoveProduto(0)"><i class="fas fa-times"></i></a></td>
-                            </tr>
-                            -->
-                        </tbody>
-                    </table>
+                    <div class="form-row">
+                        <div class="scroll-container produtos-disp-cont">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Produto</th>
+                                    <th scope="col">Quantidade</th>
+                                    <th scope="col" class="largura-preco">Preço</th>
+                                    <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableProdutosCarrinho">
+                                    <tr>
+                                        <td colspan="5" class="text-center">Adicione produtos ao carrinho</td>
+                                    <tr>
+                                    <!--
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Sabão em pó Omo</td>
+                                        <td>1</td>
+                                        <td class="td-acao-produto"><a class="btn-acao-produto" onclick="clickRemoveProduto(0)"><i class="fas fa-times"></i></a></td>
+                                    </tr>
+                                    -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -334,7 +347,11 @@ function validarForm(){
   
     </form>
 </body>
-
+<script>
+    //atualiza interface depois de tudo carregado
+    onChangeTextoProduto();
+    updateCarrinho();
+</script>
 <?php
     include "footer.php";
 ?>

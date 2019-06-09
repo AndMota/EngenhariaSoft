@@ -178,3 +178,12 @@ legend {
   .col-fieldset {
       width: 50%;
   }
+  .scroll-container {
+      overflow-x: hidden;
+      overflow-y: auto;
+  }
+  .produtos-disp-cont {
+    width: 100%;
+    height: 400px;
+    margin-top: 1em;
+  }
