@@ -65,7 +65,15 @@
         $nome = $_POST['nome'];
         $numero = $_POST['numero'];
         $administrador = $_POST['administrador'];
-
+        $verifica =  "SELECT num_identificacao FROM setores WHERE num_identificacao= " .$_POST['numero'];
+        $num = mysqli_query($conexao, $verifica);
+        $col = mysqli_num_rows($num);
+        if($col!=0){
+            ?>
+            <div class="alert alert-warning">Falha ao cadastrar, setor já existente com o número de identificação <?php echo $numero?>!</div>
+            <?php
+        }
+        else{
         $sql = "insert into setores (nome,num_identificacao, id_administrador) values ('$nome','$numero', '$administrador')";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
 
@@ -86,7 +94,7 @@
         mysqli_close($conexao);
     
     }
-
+}
     ?>
 
 </body>
