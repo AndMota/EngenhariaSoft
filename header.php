@@ -48,12 +48,12 @@ else {
 
       <?php if($tipo_usuario == 'administrador' || $tipo_usuario == 'vendedor'):?>
       <li class="nav-item dropdown">
-        <a class="custom-nav-link dropdown-toggle <?php echo checarAtivo(['listarProdutos', 'detalheProdutos', 'cadastroProdutos', 'editarProdutos', 'produtos']);?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="custom-nav-link dropdown-toggle <?php echo checarAtivo(['listarProdutos', 'infoProduto', 'cadastroProdutos', 'editarProdutos', 'produtos']);?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          Produtos
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="custom-dropdown-item <?php echo checarAtivo(['cadastroProdutos']);?>" href="cadastroProdutos.php">Cadastrar</a>
-          <a class="custom-dropdown-item <?php echo checarAtivo(['listarProdutos', 'detalheProdutos']);?>" href="listarProdutos.php">Listar</a>
+          <a class="custom-dropdown-item <?php echo checarAtivo(['listarProdutos', 'infoProduto']);?>" href="listarProdutos.php">Listar</a>
           <a class="custom-dropdown-item <?php echo checarAtivo(['produtos']);?>" href="produtos.php">Listar como cliente</a>        
         </div>
       </li>
@@ -67,24 +67,24 @@ else {
 
       <?php if($tipo_usuario == 'administrador' || $tipo_usuario == 'vendedor'):?>
         <li class="nav-item dropdown">
-          <a class="custom-nav-link dropdown-toggle <?php echo checarAtivo(['listarVendas', 'cadastroVendas','editarVenda']);?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="custom-nav-link dropdown-toggle <?php echo checarAtivo(['listarVendas', 'cadastroVendas', 'infoVenda', 'editarVenda']);?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Vendas
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="custom-dropdown-item <?php echo checarAtivo(['cadastroVendas'], true);?>" href="cadastroVendas.php">Cadastrar</a>
-            <a class="custom-dropdown-item <?php echo checarAtivo(['listarVendas', 'editarVenda'], true);?>" href="listarVendas.php">Listar</a>
+            <a class="custom-dropdown-item <?php echo checarAtivo(['listarVendas', 'editarVenda', 'infoVenda'], true);?>" href="listarVendas.php">Listar</a>
           </div>
         </li>
       <?php endif; ?>
 
       <?php if($tipo_usuario == 'administrador'):?>
       <li class="nav-item dropdown">
-        <a class="custom-nav-link dropdown-toggle <?php echo checarAtivo(['listarUsuario', 'detalheUsuario', 'cadastroUsuario','editarUsuario']);?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="custom-nav-link dropdown-toggle <?php echo checarAtivo(['listarUsuario', 'infoUsuario', 'cadastroUsuario','editarUsuario']);?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Usuários
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="custom-dropdown-item <?php echo checarAtivo(['cadastroUsuario'], true);?>" href="cadastroUsuario.php">Cadastrar</a>
-          <a class="custom-dropdown-item <?php echo checarAtivo(['listarUsuario','detalheUsuario'], true);?>" href="listarUsuario.php">Listar</a>
+          <a class="custom-dropdown-item <?php echo checarAtivo(['listarUsuario','infoUsuario'], true);?>" href="listarUsuario.php">Listar</a>
         </div>
       </li>
       <?php else: ?>
@@ -95,12 +95,12 @@ else {
 
       <?php if($tipo_usuario == 'administrador'):?>
       <li class="nav-item dropdown">
-        <a class="custom-nav-link dropdown-toggle <?php echo checarAtivo(['listarProdutos', 'detalheProdutos', 'cadastroProdutos', 'editarProdutos']);?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="custom-nav-link dropdown-toggle <?php echo checarAtivo(['listarSetores', 'infoSetor', 'cadastroSetores', 'editarSetor']);?>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          Setores
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a class="custom-dropdown-item <?php echo checarAtivo(['cadastroSetores']);?>" href="cadastroSetores.php">Cadastrar</a>
-          <a class="custom-dropdown-item <?php echo checarAtivo(['listarSetores', 'detalheSetores']);?>" href="listarSetores.php">Listar</a>
+          <a class="custom-dropdown-item <?php echo checarAtivo(['listarSetores', 'infoSetor']);?>" href="listarSetores.php">Listar</a>
         </div>
       </li>
       <?php endif; ?>
