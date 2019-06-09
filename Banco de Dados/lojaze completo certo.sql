@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 09-Jun-2019 às 05:40
+-- Generation Time: 09-Jun-2019 às 15:12
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.4
 
@@ -21,37 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `lojaze`
 --
-DROP DATABASE IF EXISTS `lojaze`;
 CREATE DATABASE IF NOT EXISTS `lojaze` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `lojaze`;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `fornecedores`
---
-
-DROP TABLE IF EXISTS `fornecedores`;
-CREATE TABLE IF NOT EXISTS `fornecedores` (
-  `id` int(11) NOT NULL,
-  `cnpj` varchar(14) DEFAULT NULL,
-  `nome` text,
-  `endereco` text,
-  `complemento` text,
-  `cidade` text,
-  `estado` text,
-  `cep` text,
-  `telefone` text,
-  `email` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `fornecedores`
---
-
-INSERT INTO `fornecedores` (`id`, `cnpj`, `nome`, `endereco`, `complemento`, `cidade`, `estado`, `cep`, `telefone`, `email`) VALUES
-(0, '123456789888', 'Atacadão do Seu Joaquim ', 'Rua Padre Norberto', NULL, 'Barra Mansa', 'RJ', '27350000', '2433554698', 'atacadaojoaquim@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -88,26 +59,22 @@ CREATE TABLE IF NOT EXISTS `produtos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` text,
   `fabricante` text,
-  `codigo_barras` text,
   `preco` float(10,2) DEFAULT NULL,
   `desconto` float(10,2) DEFAULT NULL,
   `id_setor` int(11) DEFAULT NULL,
-  `id_fornecedor` int(11) DEFAULT NULL,
   `quantidade_estoque` int(11) DEFAULT NULL,
-  `data_entrada` date DEFAULT NULL,
-  `data_validade` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_setor` (`id_setor`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `produtos`
 --
 
-INSERT INTO `produtos` (`id`, `nome`, `fabricante`, `codigo_barras`, `preco`, `desconto`, `id_setor`, `id_fornecedor`, `quantidade_estoque`, `data_entrada`, `data_validade`) VALUES
-(1, 'Cx Leite 1L', 'Longa Vida', NULL, 3.49, 0.00, 1887, NULL, 12, NULL, NULL),
-(2, 'Refrigerante de Cola 2L', 'Coca Cola', NULL, 8.00, 0.00, 6512, NULL, 48, NULL, NULL),
-(3, 'Miojo', 'Nissin', NULL, 1.79, 0.19, 93, NULL, 410, NULL, NULL);
+INSERT INTO `produtos` (`id`, `nome`, `fabricante`, `preco`, `desconto`, `id_setor`, `quantidade_estoque`) VALUES
+(1, 'Cx Leite 1L', 'Longa Vida', 3.49, 0.00, 1887, 12),
+(2, 'Refrigerante de Cola 2L', 'Coca Cola', 8.00, 0.00, 6512, 48),
+(3, 'Miojo', 'Nissin', 1.79, 0.19, 93, 410);
 
 -- --------------------------------------------------------
 
@@ -148,28 +115,28 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `senha` text NOT NULL,
   `nome` text CHARACTER SET latin1 NOT NULL,
   `telefone` text NOT NULL,
-  `cpf` varchar(11) NOT NULL,
+  `cpf` varchar(11) DEFAULT NULL,
   `cnpj` varchar(14) DEFAULT NULL,
   `endereco` text CHARACTER SET latin1 NOT NULL,
   `complemento` text CHARACTER SET latin1,
   `cidade` text CHARACTER SET latin1 NOT NULL,
   `estado` text CHARACTER SET latin1 NOT NULL,
   `cep` text CHARACTER SET latin1 NOT NULL,
-  `tipo` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0=cliente, 1=func, 2=admin',
+  `tipo` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0=cliente, 1=func, 2=admin, 3-juridico',
   `cargo_funcionario` text,
   `salario_funcionario` float DEFAULT NULL,
   `data_entrada_funcionario` date DEFAULT NULL,
   `num_identificacao_funcionario` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `senha`, `nome`, `telefone`, `cpf`, `cnpj`, `endereco`, `complemento`, `cidade`, `estado`, `cep`, `tipo`, `cargo_funcionario`, `salario_funcionario`, `data_entrada_funcionario`, `num_identificacao_funcionario`) VALUES
-(2, 'will.oli@gmail.com', '1234', 'Wilson Ferreira Oliveira', '32988888888', '12345678999', '72988935000139', 'Rua UFJF', '', 'Governador Valadares', 'MG', '224659863', 0, '', NULL, NULL, NULL),
-(3, 'hallack@gmail.com', '1234', 'Thompson Hallack', '3212345678', '11111111111', '86677709000141', 'Avenida Circular', 'Bloco 6, apto 305', 'Resende', 'RJ', '8215463', 0, '', NULL, NULL, NULL),
+(2, 'will.oli@gmail.com', '1234', 'Wilson Ferreira Oliveira', '32988888888', '12345678999', '72988935000139', 'Rua UFJF', '', 'Governador Valadares', 'MG', '224659863', 0, NULL, NULL, NULL, NULL),
+(3, 'hallack@gmail.com', '1234', 'Thompson Hallack', '3212345678', '11111111111', '86677709000141', 'Avenida Circular', 'Bloco 6, apto 305', 'Resende', 'RJ', '8215463', 0, NULL, NULL, NULL, NULL),
 (4, 'gorob@hotmail.com', '1234', 'Gorobina Juventinas', '44945617326', '12344456487', NULL, 'Rua SÃ£o Pedro', '', 'Barra Mansa', 'RJ', '31899564', 1, 'Vendedor', 1400, '2018-11-02', 100),
 (5, 'hermergardo@yahoo.com', '1234', 'Hermengardo', '2125469875', '22222222222', NULL, 'Rua Local', 'Apto 101', 'Campinas', 'SP', '321267894', 1, 'Vendedor', 1400, '2019-05-01', 112),
 (6, 'severinodjs@hotmail.com', '1234', 'Severino De Jesus', '91945621875', '11122244455', NULL, 'Rua Maria das Dores', NULL, 'Recife', 'PE', '15545448', 2, 'Administrador', 2500, '2018-11-02', 90),

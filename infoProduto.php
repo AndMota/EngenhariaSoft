@@ -40,13 +40,13 @@
                 <td class="td-userlist">Fabricante:</td><td><?php echo $row['fabricante'];?></td>
             </tr>
             <tr>    
-                <td class="td-userlist">Preço Cheio:</td><td><?php echo $row['preco'];?></td>
+                <td class="td-userlist">Preço:</td><td><?php echo $row['preco'];?></td>
             </tr>
             <tr>
                 <td class="td-userlist">Desconto:</td><td><?php echo $row['desconto'];?></td>
             </tr>
             <tr>    
-                <td class="td-userlist">Preço atual:</td><td><?php $preco = $row['preco']-$row['desconto']; echo number_format($preco,2,".","");?></td>
+                <td class="td-userlist">Preço Promocional:</td><td><?php $preco = $row['preco']-$row['desconto']; echo number_format($preco,2,".","");?></td>
             </tr>
             <tr>
                 <td class="td-userlist">Quantidade em estoque:</td><td><?php echo $row['quantidade_estoque'];?></td>

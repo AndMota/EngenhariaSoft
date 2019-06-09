@@ -72,9 +72,9 @@ include "header.php";
                 <th scope="col">ID</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Fabricante</th>
-                <th scope="col">Preço Cheio</th>
+                <th scope="col">Preço</th>
                 <th scope="col">Desconto</th>
-                <th scope="col">Preço atual</th>
+                <th scope="col">Preço Promocional</th>
                 <th scope="col">Estoque</th>
                 <th scope="col">Setor</th>
                 <th scope="col"></th> <!-- Info -->
