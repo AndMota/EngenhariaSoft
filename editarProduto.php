@@ -66,7 +66,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="inputFabricante">Fabricante</label>
-                    <input type="brand" name="fabricante" class="form-control" id="inputFabricante" placeholder="Fabricante" value="<?php echo $row['fabricante'] ?>" required>
+                    <input type="text" name="fabricante" class="form-control" id="inputFabricante" placeholder="Fabricante" value="<?php echo $row['fabricante'] ?>" required>
                 </div>
                 <!--
                 <div class="form-group col-md-6">
@@ -76,11 +76,11 @@
                 -->
                 <div class="form-group col-md-4">
                     <label for="inputPreco">Preço</label>
-                    <input type="price" name="preco" class="form-control" id="inputPreco" placeholder="R$00,00" maxlength="9" value="<?php echo $row['preco'] ?>" required>
+                    <input type="text" pattern=" 0+\.[0-9]*[1-9][0-9]*$" onkeydown="FormataMoeda(this,10,event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="preco" class="form-control" id="inputPreco" placeholder="00.00" maxlength="11" value="<?php echo $row['preco'] ?>" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputDesconto">Desconto</label>
-                    <input type="desconto" name="desconto" class="form-control" id="inputDesconto" placeholder="R$00,00" maxlength="9" value="<?php echo $row['desconto'] ?>" required>
+                    <input type="text" pattern=" 0+\.[0-9]*[1-9][0-9]*$" onkeydown="FormataMoeda(this,10,event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="preco" class="form-control" id="inputPreco" placeholder="00.00" maxlength="11" value="<?php echo $row['desconto'] ?>" required>
                 </div>
                 
                 <div class="form-group col-md-4">
@@ -117,6 +117,68 @@
         
     </form>
     <!-- Fim do Formulário de Editar de Produto  -->
+    <script>
+        /* Faz o dinheiro ficar com cara de dinheiro */
+        function troca(str,strsai,strentra)
+        {
+            while(str.indexOf(strsai)>-1)
+            {
+                str = str.replace(strsai,strentra);
+            }
+            return str;
+        }
+
+        function FormataMoeda(campo,tammax,teclapres,caracter)
+        {
+            if(teclapres == null || teclapres == "undefined")
+            {
+                var tecla = -1;
+            }
+            else
+            {
+                var tecla = teclapres.keyCode;
+            }
+
+            if(caracter == null || caracter == "undefined")
+            {
+                caracter = ".";
+            }
+
+            vr = campo.value;
+            if(caracter != "")
+            {
+                vr = troca(vr,caracter,"");
+            }
+            vr = troca(vr,"/","");
+            vr = troca(vr,",","");
+            vr = troca(vr,".","");
+
+            tam = vr.length;
+            if(tecla > 0)
+            {
+                if(tam < tammax && tecla != 8)
+                {
+                    tam = vr.length + 1;
+                }
+
+                if(tecla == 8)
+                {
+                    tam = tam - 1;
+                }
+            }
+            if(tecla == -1 || tecla == 8 || tecla >= 48 && tecla <= 57 || tecla >= 96 && tecla <= 105)
+            {
+                if(tam <= 2)
+                {
+                    campo.value = vr;
+                }
+                else //((tam > 2) && (tam <= 5))
+                {
+                    campo.value = vr.substr(0, tam - 2) + ',' + vr.substr(tam - 2, tam);
+                }
+            }
+        }
+    </script>
 
 </body>
 
