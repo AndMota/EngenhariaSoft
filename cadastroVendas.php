@@ -210,13 +210,15 @@ function formataMoeda(valor){
 
 function validarForm(){
     var form = document.forms["formVenda"];
-    var nomeClienteElement = $("#nomeCliente");
+    var idClienteElement = $("#idCliente");
     var alertErro = $("#alertErro");
 
-    if (form.checkValidity() === false || listaProdutos.length == 0) {
+    //console.log(nomeClienteElement.val());
+
+    if (form.checkValidity() === false || listaProdutos.length == 0 || idClienteElement.val() == "") {
         //alert("Form inválido");
         var erroStr = "";
-        if(nomeClienteElement != null && nomeClienteElement.val() == ""){
+        if(idClienteElement != null && idClienteElement.val() == ""){
             erroStr += "Digite o nome do cliente e escolha na lista abaixo.<br>";
         }
         if(listaProdutos.length == 0){
