@@ -335,7 +335,7 @@ function validarForm(){
             <div class="form-row">
                 <div class="form-group col">
                     <label>Cliente</label>
-                    <div class="input-group no-padding col-md-10">
+                    <div class="input-group no-padding col-md">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><div id="showIDClienteDiv">#<?php echo $idCliente?></div></span>
                         </div>
@@ -348,7 +348,7 @@ function validarForm(){
             </div>
             
             <div class="form-row">
-                <div class="form-group col-md-10">
+                <div class="form-group col-md">
                     <label for="selectFuncionario">Funcionário Responsável</label>
                     <select class="form-control" id="selectFuncionario" onchange="onChangeFuncionario()" required>
                         <?php
