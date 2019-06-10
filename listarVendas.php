@@ -21,9 +21,11 @@
     <h1>Vendas</h1>
     <!-- Aqui está o código que trata um POST para a página, neste caso, excluir uma venda -->
     <?php
-    if (isset($_POST["submit_numero"])) {
+    if (isset($_POST["submit_id"])) {
         include_once('conexao.php');
-        $numero = $_POST['submit_numero'];
+        $numero = $_POST['submit_id'];
+        $sql = "DELETE FROM `item_venda` WHERE `item_venda`.`id_pedido` ='$numero'";
+        $excluir = mysqli_query($conexao, $sql); /* Exclui os dados no banco */
         $sql = "DELETE FROM `vendas` WHERE `vendas`.`id` ='$numero'";
         $excluir = mysqli_query($conexao, $sql); /* Exclui os dados no banco */
         $qtd = mysqli_affected_rows($conexao);

@@ -13,9 +13,9 @@ Nas palavras do gerente de projetos, o sistema deve:<br/>
 
 * CRUD Setor [![Generic badge](https://img.shields.io/badge/status-Ready-green.svg)](https://shields.io/)
 
-* CRUD Produtos [![Generic badge](https://img.shields.io/badge/status-Development-red.svg)](https://shields.io/)
+* CRUD Produtos [![Generic badge](https://img.shields.io/badge/status-Ready-green.svg)](https://shields.io/)
 
-* CRUD Vendas [![Generic badge](https://img.shields.io/badge/status-Development-red.svg)](https://shields.io/)
+* CRUD Vendas [![Generic badge](https://img.shields.io/badge/status-Ready-green.svg)](https://shields.io/)
 
 ## Ferramentas Utilizadas
 

@@ -20,13 +20,14 @@
 <body>
     <!-- Trata se o setor foi editado corretamente -->
     <?php
+        include_once('conexao.php');
     /* Ligação com Banco de Dados */
     if (isset($_POST["submit"])) {
         $nome = $_POST['nome'];
         $numero = $_POST['numero'];
         $administrador = $_POST['administrador'];
 
-        $sql = "UPDATE setores WHERE num_identificacao=".$numero." SET (nome, id_administrador) VALUES ('$nome', '$administrador')";
+        $sql = "UPDATE setores SET nome='$nome', id_administrador='$administrador' WHERE num_identificacao='$numero'";
         $salvar = mysqli_query($conexao, $sql); /* Escreve os dados no banco */
 
         if ($salvar) {
@@ -43,7 +44,6 @@
     ?>
     <!-- Aqui está o código que trata um POST para a página, neste caso, editar um setor -->
     <?php
-        include_once('conexao.php');
         $sql =  "SELECT * FROM setores WHERE num_identificacao=" . $_POST['submit_numero'];
         $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
         $row = mysqli_fetch_array($resultado);
@@ -53,6 +53,7 @@
     ?>
     <!-- Formulário de Editação de Setor -->
     <form action="" method="POST" target="_self">
+        <INPUT TYPE="hidden" NAME="submit_numero" VALUE="<?php echo $num ?>"/>
         <fieldset>
             <legend>Dados do Setor:</legend>
             <div class="form-row">
@@ -68,7 +69,6 @@
                     <label for="adm">Administrador responsável </label>
                     <select id="adm" name="administrador" class="form-control" onchange="enviar()">
                         <?php
-                        include_once('conexao.php');
                         $sql =  "SELECT nome, id FROM usuarios WHERE tipo=2 ";
                         $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
                         while ($row = mysqli_fetch_array($resultado)) {
