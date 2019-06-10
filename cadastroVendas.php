@@ -47,6 +47,11 @@
     if(isset($_POST['valorTotal'])){
         $valorTotal = str_replace("R$", "", $_POST['valorTotal']);
         $valorTotal = str_replace(",", ".", $valorTotal);
+        
+        //echo "valorTotal: '" . $valorTotal . "'<br>";
+        $valorTotal = limpaNumero($valorTotal);
+        //echo "valorTotal: '" . $valorTotal . "'<br>";
+        $valorTotal = floatval($valorTotal);
     }
     if(isset($_POST['listaProdutos'])){
         $produtos = json_decode($_POST['listaProdutos'], true);
@@ -55,11 +60,11 @@
     if(isset($_POST["idCliente"])){
         $sql = "insert into vendas (id_cliente, id_funcionario, data_venda, valor_total) values ('$idCliente','$idFuncionario','$data','$valorTotal')";
         //echo $sql . "<br>";
-        $salvar = mysqli_query($conexao, $sql);/* Escreve os dados no banco */
+        $salvar = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
         if($salvar)
         {
-            $last_id = mysqli_insert_id($conexao);
+            $last_id = mysqli_insert_id($conexao) or die(mysqli_error($conexao));
 
             //com o id da venda, cadastra os produtos
             for($i=0; $i<count($produtos);$i++){
@@ -71,7 +76,7 @@
 
                 $sql = "insert into item_venda (id_produto, id_pedido, quantidade, valor_vendido) values ('$idProduto','$last_id','$quantidade','$preco')";
                 //echo $sql . "<br>";
-                mysqli_query($conexao, $sql);/* Escreve os dados no banco */
+                mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 
             }
         }
@@ -79,6 +84,17 @@
         {
             die(mysqli_error($conexao));
         }
+    }
+    function limpaNumero($strNum){
+        $strret = "";
+        $numArr = ['', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', ',', '-'];
+        for($i=0; $i < strlen($strNum);$i++){
+            $chr = $strNum[$i];
+            if(array_search($chr, $numArr)){
+                $strret .= $chr;
+            }
+        }
+        return $strret ;
     }
     mysqli_close($conexao);
     $_POST = array();
