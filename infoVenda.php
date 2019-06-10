@@ -32,7 +32,7 @@
     $row1 = mysqli_fetch_array($resultado);
     $row2 = mysqli_fetch_array($resultado2);
     //$row3 = mysqli_fetch_array($resultado3);
-    $row1['valor_total'] = 'R$ ' . $row1['valor_total'];
+    //$row1['valor_total'] = 'R$ ' . $row1['valor_total'];
 
 
 
@@ -80,7 +80,6 @@
             $sql .= " ORDER BY produtos.nome ASC";
             $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
             while ($row = mysqli_fetch_array($resultado)) {
-                $row['valor_vendido'] = 'R$ ' . $row['valor_vendido'];
                 echo '<tr>';
                 echo '<td scope="row">' . $row["nome"] . '</td>';
                 echo ' <td> ' . $row["quantidade"] . '</td>';
