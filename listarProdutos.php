@@ -122,10 +122,10 @@ include "header.php";
                 echo '<td>' . $row["id"] . '</td>';
                 echo '<td id="name">' . $row["nome"] . '</td>';
                 echo '<td>' . $row["fabricante"] . '</td>';
-                echo '<td>' . $row["preco"] . '</td>';
-                echo '<td>' . $row["desconto"] . '</td>';
+                echo '<td>R$ ' . $row["preco"] . '</td>';
+                echo '<td>R$ ' . $row["desconto"] . '</td>';
                 $preco=$row["preco"]-$row["desconto"];
-                echo '<td>' . number_format($preco,2,".","") . '</td>';
+                echo '<td>R$ ' . number_format($preco,2,".","") . '</td>';
                 echo '<td>' . $row["quantidade_estoque"] . '</td>';
                 echo '<td>' . $row["nomeSetor"] . '</td>';
                 echo ' <td>

@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS `setores` (
 
 INSERT INTO `setores` (`nome`, `id_administrador`, `num_identificacao`) VALUES
 ('Alimentos', 12, 93),
+('Padaria', 12, 654),
 ('Laticinios', 6, 1887),
 ('Enlatados', 12, 3229),
 ('Produtos de Limpeza', 10, 5591),
@@ -155,13 +156,13 @@ INSERT INTO `usuarios` (`id`, `email`, `senha`, `nome`, `telefone`, `cpf`, `cnpj
 
 DROP TABLE IF EXISTS `vendas`;
 CREATE TABLE IF NOT EXISTS `vendas` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_cliente` int(11) DEFAULT NULL,
   `id_funcionario` int(11) DEFAULT NULL,
   `data_venda` datetime DEFAULT NULL,
   `valor_total` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `vendas`

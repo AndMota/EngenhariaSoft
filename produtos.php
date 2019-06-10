@@ -95,7 +95,7 @@ include "header.php";
                 echo '<td id="name">' . $row["nome"] . '</td>';
                 echo '<td>' . $row["fabricante"] . '</td>';
                 $preco=$row["preco"]-$row["desconto"];
-                echo '<td>' . number_format($preco,2,",","") . '</td>';
+                echo '<td> R$ ' . number_format($preco,2,",","") . '</td>';
                 echo '<td>' . $row["quantidade_estoque"] . '</td>';
                 echo '<td>' . $row["nomeSetor"] . '</td>';
             }

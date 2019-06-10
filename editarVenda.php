@@ -22,11 +22,12 @@
     $idFuncionario = "";
     $valorTotal = "";
     $nomeFuncionario = "";
+    $jsonProdutos = "";
     $produtos = [];
     $data = date("Y-m-d H:i:s");
 
-    if(isset($_GET['id'])){
-        $idVenda = $_GET['id'];
+    if(isset($_POST['submit_id'])){
+        $idVenda = $_POST['submit_id'];
     }
     if(isset($_POST['idCliente'])){
         $idCliente = $_POST['idCliente'];
@@ -111,7 +112,7 @@
 
     }
 
-    if(isset($_GET['id'])){
+    if(isset($_POST['submit_id'])){
         //carrega dados da venda
         $sql =  "SELECT v.id, v.id_cliente, u.nome as nome_cliente, v.id_funcionario, v.valor_total FROM vendas v, usuarios u WHERE u.id=v.id_cliente AND v.id=" . $idVenda;
         $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
