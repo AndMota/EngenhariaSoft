@@ -108,6 +108,8 @@
                     <?php
                 }
             }
+        }else{
+            echo '<div class="alert alert-warning"><center>ERRO!!! Desconto informado maior do que o preço do produto!</center></div>';
         }
         
     }
