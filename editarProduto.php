@@ -22,7 +22,7 @@
     /* Ligação com Banco de Dados */
     if(isset($_POST["submit"]))
     {
-        $id = $_POST['submit_id'];
+        $id = $_POST['submit_numero'];
         $nome = $_POST['nome'];
         $fabricante = $_POST['fabricante'];
         $preco = $_POST['preco'];
@@ -30,7 +30,7 @@
         $setor = $_POST['setor'];
         $desconto = $_POST['desconto'];
 
-        $sql = "UPDATE produtos (nome, fabricante, preco, quantidade_estoque, id_setor, desconto) WHERE id='$id' VALUES ('$nome','$fabricante', '$preco', '$quantidade', '$setor', '$desconto')";
+        $sql = "UPDATE produtos SET nome='$nome', fabricante='$fabricante', preco='$preco', quantidade_estoque='$quantidade', id_setor='$setor', desconto='$desconto' WHERE produtos.id='$id'";
         $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
 
         if($salvar)
@@ -54,9 +54,9 @@
     $resultado = mysqli_query($conexao, $sql2) or die($conexao->error);
     $row = mysqli_fetch_array($resultado);
     ?>
-    <!-- Formulário de Cadastro de Produto -->
+    <!-- Formulário de Edição de Produto -->
     <form action="" method="POST" target="_self">
-    <input type="text" name="submit_id" class="form-control" id="submit_id" placeholder="ID" value="<?php echo $row['id'] ?>" hidden>
+    <input type="text" name="submit_numero" class="form-control" id="submit_numero" placeholder="ID" value="<?php echo $row['id'] ?>" hidden>
         <fieldset>
             <legend>Dados do Produto:</legend>
             <div class="form-row">
