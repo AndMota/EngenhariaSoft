@@ -162,13 +162,13 @@
                     <label for="inputTelefone">Telefone</label>
                     <input type="text" name="telefone" class="form-control" id="inputTelefone" placeholder="xx xxxx-xxx" onkeypress="mascara(this, '## ####-####')"  maxlength="12" value="<?php echo aplicaMascaraTelefone($row['telefone']) ?>" required>
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-2" id="formGroupCPF">
                     <label for="inputCPF">CPF</label>
                     <input type="text" name="cpf" class="form-control" id="inputCPF" placeholder="xxx.xxx.xxx-xx" onkeypress="mascara(this, '###.###.###-##')"  maxlength="14" value="<?php echo aplicaMascara($row['cpf'], '###.###.###-##') ?>" required>
                 </div>
                 <div class="form-group col-md-2" id="formGroupCNPJ">
                     <label for="inputCNPJ">CNPJ</label>
-                    <input type="text" name="cnpj" class="form-control" id="inputCNPJ" placeholder="xx.xxx.xxx/xxxx-xx" onkeypress="mascara(this, '##.###.###/####-##')"  maxlength="18" value="<?php echo aplicaMascara($row['cpf'], '###.###.###-##') ?>">
+                    <input type="text" name="cnpj" class="form-control" id="inputCNPJ" placeholder="xx.xxx.xxx/xxxx-xx" onkeypress="mascara(this, '##.###.###/####-##')"  maxlength="18" value="<?php echo aplicaMascara($row['cnpj'], '###.###.###-##') ?>">
                 </div>
             </div>
             <div class="form-row">
