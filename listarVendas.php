@@ -116,12 +116,13 @@
             }
             $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
             while ($row = mysqli_fetch_array($resultado)) {
+                $row['valor_total'] = 'R$ ' . $row['valor_total'];
                 echo '<tr>';
                 echo '<td scope="row">' . $row["idVenda"] . '</td>';
                 echo ' <td> ' . $row["id_cliente"] . '</td>';
                 echo ' <td id="name"> ' . $row["nome"] . '</td>';
                 echo ' <td> ' . $row["data_venda"] . '</td>';
-                echo ' <td> ' . $row["valor_total"] . '</td>';
+                echo ' <td> R$ ' . $row["valor_total"] . '</td>';
                 echo ' <td>
                 <center><form action="infoVenda.php" method="POST"><INPUT TYPE="hidden" NAME="submit_id" VALUE="' . $row["idVenda"] . '"/><input type="submit" class="btn btn-info" value="Info"></form></center></td>';
                 echo ' <td>
@@ -135,8 +136,7 @@
             ?>
         <tbody>
     </table>
-    <hr>
-
+    <hr>      
     <!-- Aqui, um script bara uma busca simple na tabela -->
     <script>
         document.forms.formBusca.addEventListener("submit", function (e){
@@ -163,7 +163,7 @@
         function enviar(){
             document.forms.formBusca.submit();
         }
-    </script>
+    </script> 
 
 </body>
 

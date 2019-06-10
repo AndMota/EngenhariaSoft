@@ -80,31 +80,36 @@
     /* Ligação com Banco de Dados */
     if(isset($_POST["submit"]))
     {
-
-        $nome = $_POST['nome'];
-        $fabricante = $_POST['fabricante'];
-        $preco = $_POST['preco'];
-        $quantidade = $_POST['quantidade'];
-        $setor = $_POST['setor'];
-        $desconto = $_POST['desconto'];
-
-        $sql = "insert into produtos (nome, fabricante, preco, quantidade_estoque, id_setor, desconto) values ('$nome','$fabricante', '$preco', '$quantidade', '$setor', '$desconto')";
-        $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
-
-        if($salvar)
+        if($_POST['desconto']<=$_POST['preco'])
         {
-            ?>
-            <div class="alert alert-success">Produto cadastrado com sucesso!</div>
-            <?php
+            if($_POST['quantidade']>=0)
+            {
+                $nome = $_POST['nome'];
+                $fabricante = $_POST['fabricante'];
+                $preco = $_POST['preco'];
+                $quantidade = $_POST['quantidade'];
+                $setor = $_POST['setor'];
+                $desconto = $_POST['desconto'];
+
+                $sql = "insert into produtos (nome, fabricante, preco, quantidade_estoque, id_setor, desconto) values ('$nome','$fabricante', '$preco', '$quantidade', '$setor', '$desconto')";
+                $salvar = mysqli_query($conexao,$sql);/* Escreve os dados no banco */
+
+                if($salvar)
+                {
+                    ?>
+                    <div class="alert alert-success">Produto cadastrado com sucesso!</div>
+                    <?php
+                }
+                else
+                {
+                    die(mysqli_error($conexao));
+                    ?>
+                    <div class="alert alert-warning">Falha ao cadastrar produto!</div>
+                    <?php
+                }
+            }
         }
-        else
-        {
-            die(mysqli_error($conexao));
-            ?>
-            <div class="alert alert-warning">Falha ao cadastrar produto!</div>
-            <?php
-        }
-    
+        
     }
     ?>
     <script>

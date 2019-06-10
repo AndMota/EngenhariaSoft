@@ -17,7 +17,7 @@
     include "header.php";
 ?>
 
-<body>
+<body>       
 <?php
     include_once('conexao.php');
 
@@ -32,7 +32,7 @@
     $row1 = mysqli_fetch_array($resultado);
     $row2 = mysqli_fetch_array($resultado2);
     //$row3 = mysqli_fetch_array($resultado3);
-
+    $row1['valor_total'] = 'R$ ' . $row1['valor_total'];
 
 
 
@@ -52,7 +52,7 @@
                 <td class="td-userlist">Data:</td><td><?php echo $row1['data_venda'];?></td>
             </tr>
             <tr>
-                <td class="td-userlist">Valor Total:</td><td><?php echo $row1['valor_total'];?></td>
+                <td class="td-userlist">Valor Total:</td><td>R$ <?php echo number_format($row1['valor_total'],2,".","");?></td>
             </tr>
             <tr>
                 <td class="td-userlist">Cliente:</td><td><?php echo $row1['nome'];?></td>
@@ -80,10 +80,11 @@
             $sql .= " ORDER BY produtos.nome ASC";
             $resultado = mysqli_query($conexao, $sql) or die($conexao->error);
             while ($row = mysqli_fetch_array($resultado)) {
+                $row['valor_vendido'] = 'R$ ' . $row['valor_vendido'];
                 echo '<tr>';
                 echo '<td scope="row">' . $row["nome"] . '</td>';
                 echo ' <td> ' . $row["quantidade"] . '</td>';
-                echo ' <td id="name"> ' . $row["valor_vendido"] . '</td>';
+                echo ' <td id="name">R$ ' . number_format($row["valor_vendido"],2,".","") . '</td>';
             }
             mysqli_close($conexao);
 
@@ -91,7 +92,7 @@
         <tbody>
     </table>
     <hr>
-
+   
 </body>
 
 <?php
