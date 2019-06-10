@@ -38,11 +38,11 @@
                 -->
                 <div class="form-group col-md-4">
                     <label for="inputPreco">Preço</label>
-                    <input type="text" pattern=" 0+\.[0-9]*[1-9][0-9]*$" onkeydown="FormataMoeda(this,10,event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="preco" class="form-control" id="inputPreco" placeholder="00.00" maxlength="11" required>
+                    <input type="text" onkeydown="FormataMoeda(this,10,event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="preco" class="form-control" id="inputPreco" placeholder="00.00" maxlength="11" required>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputDesconto">Desconto</label>
-                    <input type="text" pattern=" 0+\.[0-9]*[1-9][0-9]*$" onkeydown="FormataMoeda(this,10,event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="desconto" class="form-control" id="inputDesconto" placeholder="00.00" maxlength="11" required>
+                    <input type="text" onkeydown="FormataMoeda(this,10,event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="desconto" class="form-control" id="inputDesconto" placeholder="00.00" maxlength="11" required>
                 </div>
                 
                 <div class="form-group col-md-4">
