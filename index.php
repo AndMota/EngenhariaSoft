@@ -19,41 +19,28 @@
 
 <body>
 
-    <hr>
-    <h1>Bem vindo ao site do Lojão do Zé!</h1>
-    <hr>
-    <!-- Carrossel -->
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="imagem" src="publico/imagens/logo.png" alt="Primeiro slide">
-            </div>
-            
-            <div class="carousel-item">
-                <img class="imagem" src="publico/imagens/produto.jpg" alt="Segundo slide">
-            </div>
-
-            <div class="carousel-item">
-                <img class="imagem" src="publico/imagens/produto2.png" alt="Terceiro slide">
-            </div>
-
-            <div class="carousel-item">
-                <img class="imagem" src="publico/imagens/produto3.jpg" alt="Quarto slide">
-            </div>
-            
-            <div class="carousel-item">
-                <img class="imagem" src="publico/imagens/produto4.jpg" alt="Quinto slide">
-            </div>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+        <img src="publico/imagens/prateleira1.jpg" class="d-block w-100" alt="Primeiro slide">
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+        <div class="carousel-item">
+        <img src="publico/imagens/prateleira2.jpg" class="d-block w-100" alt="Segundo slide">
+        </div>
+        <div class="carousel-item">
+        <img src="publico/imagens/prateleira3.jpg" class="d-block w-100" alt="Terceiro slide">
+        </div>
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+    </div>
+
     <!-- Fim do Carrossel -->
     <hr>
     <!-- Texto descritivo do Lojão do Zé -->

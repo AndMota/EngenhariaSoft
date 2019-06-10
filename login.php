@@ -38,7 +38,9 @@ if(isset($_POST["email"])){
 
     if($num_rows == 1){
         //armazena o nome e o tipo de usuario na sessão
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         $_SESSION['nome'] = $row['nome'];
         $_SESSION['id'] = $row['id'];
         $_SESSION['tipo'] = $row['tipo'];

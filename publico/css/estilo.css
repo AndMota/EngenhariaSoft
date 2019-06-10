@@ -117,6 +117,21 @@ legend {
     height: 1.6em;
 }
 
+/* custom link */
+
+.custom-link {
+    color: #ffffff;
+}
+.custom-link:hover, .custom-link:focus {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #901b1d;
+}
+.custom-link.disabled {
+    color: #ffffff;
+}
+
+
 /* customização do drop-menu */
 
 .custom-dropdown-item {

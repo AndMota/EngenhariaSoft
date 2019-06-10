@@ -69,9 +69,9 @@
     if(isset($_POST["idCliente"])){
         //exit();
         $sql = "UPDATE vendas SET id_cliente=".$idCliente.", id_funcionario=".$idFuncionario.", valor_total=".$valorTotal." WHERE id=".$idVenda;
-        echo $sql . "<br>";
+        //echo $sql . "<br>";
         $salvar = mysqli_query($conexao, $sql) or die($conexao->error);
-        echo "salvar: " . $salvar . "<br>";
+        //echo "salvar: " . $salvar . "<br>";
         //com o id da venda, cadastra/atualiza/exclui os produtos
         for($i=0; $i<count($produtos);$i++){
             $produto = $produtos[$i];
@@ -105,7 +105,7 @@
                 $sql = "UPDATE item_venda SET id_produto=".$idProduto.", quantidade=".$quantidade.", valor_vendido=".$preco." WHERE id=".$idItemVenda;
             }
             
-            echo $sql . "<br>";
+            //echo $sql . "<br>";
             mysqli_query($conexao, $sql) or die($conexao->error);
 
         }

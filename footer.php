@@ -9,15 +9,16 @@
       <div class="row text-center text-md-left mt-3 pb-3">
 
         <!-- Coluna no Grid -->
-        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+        <div class="col-md-9 col-lg-9 col-xl-9 mx-auto mt-9">
           <h6 class="text-uppercase mb-4 font-weight-bold">Lojão do Zé</h6>
-          <p></p> 
+          <p>O Lojão do Zé nasceu da visão empreendedora que conduziu José Silva de Oliveira a abrir em maio de 1996 sua primeira mercearia, no bairro São Pedro, na Região Metropolitana de Juiz de Fora.</p>
+          <p>Era dada a largada para uma trajetória marcada pela simplicidade na gestão, competência, perseverança e boas parcerias.</p>
         </div>
         <!-- Coluna no Grid -->
 
         <hr class="w-100 clearfix d-md-none">
 
-        <!-- Coluna no Grid -->
+        <!-- Coluna no Grid 
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
           <h6 class="text-uppercase mb-4 font-weight-bold">Setores</h6>
           <p>
@@ -33,11 +34,12 @@
             <a href="#!">Limpeza</a>
           </p>
         </div>
+        -->
         <!-- Coluna no Grid -->
 
         <hr class="w-100 clearfix d-md-none">
 
-        <!-- Coluna no Grid -->
+        <!-- Coluna no Grid 
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
           <h6 class="text-uppercase mb-4 font-weight-bold">Useful links</h6>
           <p>
@@ -53,6 +55,7 @@
             <a href="#!">Help</a>
           </p>
         </div>
+        -->
 
         <!-- Coluna no Grid -->
         <hr class="w-100 clearfix d-md-none">
@@ -95,12 +98,12 @@
           <div class="text-center text-md-right">
             <ul class="list-unstyled list-inline">
               <li class="list-inline-item">
-                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                <a class="btn-floating btn-sm rgba-white-slight mx-1 custom-link" href="https://www.facebook.com/CienciaDaComputacaoUfjf/" target="_blank">
                   <i class="fab fa-facebook-f"></i>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a class="btn-floating btn-sm rgba-white-slight mx-1">
+                <a class="btn-floating btn-sm rgba-white-slight mx-1 custom-link" href="https://twitter.com/UFJF_" target="_blank">
                   <i class="fab fa-twitter"></i>
                 </a>
               </li>
