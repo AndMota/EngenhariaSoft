@@ -169,7 +169,7 @@
                 }
                 else //((tam > 2) && (tam <= 5))
                 {
-                    campo.value = vr.substr(0, tam - 2) + ',' + vr.substr(tam - 2, tam);
+                    campo.value = vr.substr(0, tam - 2) + '.' + vr.substr(tam - 2, tam);
                 }
             }
         }
