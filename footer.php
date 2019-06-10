@@ -11,8 +11,7 @@
         <!-- Coluna no Grid -->
         <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
           <h6 class="text-uppercase mb-4 font-weight-bold">Lojão do Zé</h6>
-          <p>Aqui você pode usar linhas e colunas para organizar seu rodapé.</p> 
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+          <p></p> 
         </div>
         <!-- Coluna no Grid -->
 
