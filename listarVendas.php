@@ -121,11 +121,11 @@
                 echo ' <td> ' . $row["data_venda"] . '</td>';
                 echo ' <td> ' . $row["valor_total"] . '</td>';
                 echo ' <td>
-                <center><form action="infoVenda.php" method="POST"><INPUT TYPE="hidden" NAME="submit_numero" VALUE="' . $row["idVenda"] . '"/><input type="submit" class="btn btn-info" value="Info"></form></center></td>';
+                <center><form action="infoVenda.php" method="POST"><INPUT TYPE="hidden" NAME="submit_id" VALUE="' . $row["idVenda"] . '"/><input type="submit" class="btn btn-info" value="Info"></form></center></td>';
                 echo ' <td>
-                <center><form action="editarVenda.php" method="POST"><INPUT TYPE="hidden" NAME="submit_numero" VALUE="' . $row["idVenda"] . '"/><input type="submit" class="btn btn-warning" value="Editar"></form></center></td>';
+                <center><form action="editarVenda.php" method="POST"><INPUT TYPE="hidden" NAME="submit_id" VALUE="' . $row["idVenda"] . '"/><input type="submit" class="btn btn-warning" value="Editar"></form></center></td>';
                 echo ' <td>
-                <center><form action="listarVendas.php" method="POST"><INPUT TYPE="hidden" NAME="submit_numero" VALUE="' . $row["idVenda"] . '"/><input type="submit" class="btn btn-danger" value="Excluir"></form></center></td>';
+                <center><form action="listarVendas.php" method="POST"><INPUT TYPE="hidden" NAME="submit_id" VALUE="' . $row["idVenda"] . '"/><input type="submit" class="btn btn-danger" value="Excluir"></form></center></td>';
                 echo '</tr>';
             }
             mysqli_close($conexao);

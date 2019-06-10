@@ -83,9 +83,17 @@
             <tr>
                 <td class="td-userlist">Nome:</td><td><?php echo $row['nome'];?></td>
             </tr>
+            <?php
+                if($row['tipo'] != 3){ ?>
             <tr>
                 <td class="td-userlist">CPF:</td><td><?php echo aplicaMascara($row['cpf'],'###.###.###-##');?></td>
             </tr>
+            <?php
+                }
+                else{
+
+                }
+            ?>
             <?php
                 if($row['tipo'] == 3){ ?>
             <tr>
