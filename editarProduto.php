@@ -80,7 +80,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="inputDesconto">Desconto</label>
-                    <input type="text" onkeydown="FormataMoeda(this,10,event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="preco" class="form-control" id="inputPreco" placeholder="00.00" maxlength="11" value="<?php echo $row['desconto'] ?>" required>
+                    <input type="text" onkeydown="FormataMoeda(this,10,event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" name="desconto" class="form-control" id="inputDesconto" placeholder="00.00" maxlength="11" value="<?php echo $row['desconto'] ?>" required>
                 </div>
                 
                 <div class="form-group col-md-4">

@@ -122,7 +122,7 @@
                 echo ' <td> ' . $row["id_cliente"] . '</td>';
                 echo ' <td id="name"> ' . $row["nome"] . '</td>';
                 echo ' <td> ' . $row["data_venda"] . '</td>';
-                echo ' <td> ' . $row["valor_total"] . '</td>';
+                echo ' <td> R$ ' . $row["valor_total"] . '</td>';
                 echo ' <td>
                 <center><form action="infoVenda.php" method="POST"><INPUT TYPE="hidden" NAME="submit_id" VALUE="' . $row["idVenda"] . '"/><input type="submit" class="btn btn-info" value="Info"></form></center></td>';
                 echo ' <td>
